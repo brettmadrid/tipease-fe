@@ -8,10 +8,5 @@
 
 ## UI Developer
 
-| [<img src="https://avatars0.githubusercontent.com/u/42873186?s=460&v=4" align="center" width=100><br><b>Brandon Desselle</b> _](https://github.com/BDesselle) |
-|---|---|---|---|
 
 ## Front-End Architect 
-
-| [<img src="https://avatars3.githubusercontent.com/u/43302456?s=460&v=4" align="center" width=100><br><b>Brett Madrid</b>  ](https://github.com/brettmadrid) |
-|---|
