@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import { NavLink as RRNavLink } from "react-router-dom";
 import {
   Collapse,
@@ -11,7 +11,8 @@ import {
   UncontrolledDropdown,
   DropdownToggle,
   DropdownMenu,
-  DropdownItem } from 'reactstrap';
+  DropdownItem
+} from "reactstrap";
 
 export default class Navigation extends React.Component {
   constructor(props) {
@@ -31,7 +32,7 @@ export default class Navigation extends React.Component {
     return (
       <div>
         {/* Reactstrap Navbar component */}
-        <Navbar style={{backgroundColor: '#A26CCC'}} light expand="md">
+        <Navbar style={{ backgroundColor: "#A26CCC" }} light expand="md">
           <NavbarBrand href="/">tipEase</NavbarBrand>
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
@@ -39,36 +40,32 @@ export default class Navigation extends React.Component {
               <NavItem>
                 <NavLink
                   tag={RRNavLink}
-                  exact to="/"
+                  exact
+                  to="/"
                   activeClassName="activeNavButton"
-                >Home
+                >
+                  Home
                 </NavLink>
               </NavItem>
               <NavItem>
-              <NavLink
+                <NavLink
                   tag={RRNavLink}
-                  exact to="/register"
+                  exact
+                  to="/register"
                   activeClassName="activeNavButton"
-                >Register
+                >
+                  Register
                 </NavLink>
               </NavItem>
-              <UncontrolledDropdown nav inNavbar>
-                <DropdownToggle nav caret>
-                  Login
-                </DropdownToggle>
-                <DropdownMenu right>
-                  <DropdownItem>
-                    Customers
-                  </DropdownItem>
-                  <DropdownItem>
-                    Service Workers
-                  </DropdownItem>
-                  <DropdownItem divider />
-                  <DropdownItem>
-                    Reset
-                  </DropdownItem>
-                </DropdownMenu>
-              </UncontrolledDropdown>
+              <NavItem>
+                <NavLink
+                  tag={RRNavLink}
+                  exact
+                  to="/login"
+                  activeClassName="activeNavButton"
+                >Login
+                </NavLink>
+              </NavItem>
             </Nav>
           </Collapse>
         </Navbar>

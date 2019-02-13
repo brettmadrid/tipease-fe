@@ -5,10 +5,12 @@ import {
   Button,
 } from 'reactstrap';
 
+import '../App.css'
+
 class Login extends Component {
   render() {
     return (
-      <Container className="App">
+      <Container className="login-container">
         <h2>Sign In</h2>
         <Form className="form">
           <Col>
