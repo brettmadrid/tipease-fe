@@ -6,7 +6,7 @@
 
 ***Stretch:*** Implement a payment feature that actually allows money exchange with a service like, paypal or stripe or venmo.
 
-## Front-End Architect 
+## Front-End Architect
 
 | [<img src="https://avatars3.githubusercontent.com/u/43302456?s=460&v=4" align="center" width=100><br><b>Brett Madrid</b> ](https://github.com/brettmadrid) |
 |---|
