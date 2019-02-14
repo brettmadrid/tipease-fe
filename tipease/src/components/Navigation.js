@@ -31,9 +31,8 @@ export default class Navigation extends React.Component {
   render() {
     return (
       <div>
-        {/* Reactstrap Navbar component */}
         <Navbar style={{ backgroundColor: "#A26CCC" }} light expand="md">
-          <NavbarBrand href="/">tipEase</NavbarBrand>
+          <NavbarBrand href="/" style={{ fontSize: "2rem" }}>tipEase</NavbarBrand>
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
