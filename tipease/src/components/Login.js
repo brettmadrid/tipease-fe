@@ -1,44 +1,39 @@
 import React, { Component } from 'react';
-import {
-  Container, Col, Form,
-  FormGroup, Label, Input,
-  Button,
-} from 'reactstrap';
-
-import '../App.css'
+import LoginPage from './LoginPage';
+import Home from './Home'
 
 class Login extends Component {
+  constructor() {
+    super();
+    this.state = {
+      username: "",
+      password: "",
+      role: ""
+    }
+  }
+
+  updateInput = (key, value) => {
+    this.setState({ [key]: value })
+  }
+
+  submitHandler = e => {
+    e.preventDefault();
+    const user = this.state.username;
+    localStorage.setItem('user', user);
+    window.location.reload();
+  };
+
   render() {
     return (
-      <Container className="login-container">
-        <h2>Sign In</h2>
-        <Form className="form">
-          <Col>
-            <FormGroup>
-              <Label>Email</Label>
-              <Input
-                type="email"
-                name="email"
-                id="exampleEmail"
-                placeholder="myemail@email.com"
-              />
-            </FormGroup>
-          </Col>
-          <Col>
-            <FormGroup>
-              <Label for="examplePassword">Password</Label>
-              <Input
-                type="password"
-                name="password"
-                id="examplePassword"
-                placeholder="********"
-              />
-            </FormGroup>
-          </Col>
-          <Button>Submit</Button>
-        </Form>
-      </Container>
-    );
+      <div>
+        <LoginPage
+          username={this.state.username}
+          password={this.state.password}
+          updateInput={this.updateInput}
+          submitHandler={this.submitHandler}
+        />
+      </div>
+    )
   }
 }
 
