@@ -18,6 +18,7 @@ class WorkerDashboard extends Component {
     const { photo, fname, lname, jobTitle, tagline, totalTips } = this.state;
     return (
       <div>
+        <img src={this.state.photo} alt="a pic"></img>
         <h2>
           {fname} {lname}
         </h2>
