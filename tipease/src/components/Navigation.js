@@ -7,11 +7,7 @@ import {
   NavbarBrand,
   Nav,
   NavItem,
-  NavLink,
-  UncontrolledDropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem
+  NavLink
 } from "reactstrap";
 
 export default class Navigation extends React.Component {
@@ -32,7 +28,7 @@ export default class Navigation extends React.Component {
     return (
       <div>
         <Navbar style={{ backgroundColor: "#A26CCC" }} light expand="md">
-          <NavbarBrand href="/" style={{ fontSize: "2rem" }}>tipEase</NavbarBrand>
+          <NavbarBrand href="/" style={{ fontSize: "2rem" }}>TipEASE</NavbarBrand>
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
@@ -56,15 +52,15 @@ export default class Navigation extends React.Component {
                   Register
                 </NavLink>
               </NavItem>
-              <NavItem>
+              {/* <NavItem>
                 <NavLink
                   tag={RRNavLink}
                   exact
-                  to="/login"
+                  to="/logout"
                   activeClassName="activeNavButton"
-                >Login
+                >Logout
                 </NavLink>
-              </NavItem>
+              </NavItem> */}
             </Nav>
           </Collapse>
         </Navbar>
