@@ -2,9 +2,9 @@ import React, { Component } from "react";
 import Navigation from "./components/Navigation";
 import { Route } from "react-router-dom";
 
-import Home from './components/Home';
-import Login from './components/Login';
-import MainArea from "./components/MainArea";
+import Home from "./components/Home";
+import Register from "./components/Register";
+import WorkerDashboard from "./components/WorkerDashboard";
 
 class App extends Component {
   constructor() {
@@ -15,7 +15,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    if (!localStorage.getItem('user')) {
+    if (!localStorage.getItem("user")) {
       this.setState({ validated: false });
     } else {
       this.setState({ validated: true });
@@ -26,25 +26,26 @@ class App extends Component {
     return (
       <div className="App">
         <Navigation />
+
         <Route exact path="/" component={Home} />
-        <Route exact path="/login" component={Login} />
-        {/* <Route path="/register" component={Register} />*/}
+        <Route exact path="/register" component={Register} />
 
-        <Authenticate validated ={this.state.validated}>
-          <MainArea />
-        </Authenticate>
+        {/* {localStorage.getItem("user") ? (
+          <Route
+            exact
+            path="/workers"
+            render={props => <WorkerDashboard {...props} />}
+          />
+        ) : null} */}
 
+        {/* <Route
+          exact
+          path="/workers/:id"
+          render={props => <Worker {...props} worker={this.state.worker} />}
+        /> */}
       </div>
     );
   }
 }
-
-const Authenticate = props => {
-  return props.validated ? (
-    <div>{props.children}</div>
-  ) : (
-      <Login />
-  );
-};
 
 export default App;

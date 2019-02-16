@@ -56,9 +56,9 @@ export default class Navigation extends React.Component {
                 <NavLink
                   tag={RRNavLink}
                   exact
-                  to="/login"
+                  to="/logout"
                   activeClassName="activeNavButton"
-                >Login
+                >Logout
                 </NavLink>
               </NavItem> */}
             </Nav>

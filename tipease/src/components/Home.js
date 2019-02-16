@@ -1,20 +1,31 @@
-import React from 'react';
-import { Jumbotron, Button } from 'reactstrap';
+import React, { Component } from "react";
+import CustomerHomePage from "./CustomerHomePage";
+import WorkerDashboard from "./WorkerDashboard";
+import Register from "./Register";
 
-const Home = (props) => {
-  return (
-    <div>
-      <Jumbotron>
-        <h1 className="display-3">TipEASE</h1>
-        <p className="lead">Your perfect solution to ensure that you get all your tips....all the time by allowing your customer blah blah blah blah blah blah blah</p>
-        <hr className="my-2" />
-        {/* <p>The easiest way to make sure that your favorite service worker receives the entire tip that you leave them.</p>
-        <p className="lead">
-          <Button color="primary">Learn More</Button>
-        </p> */}
-      </Jumbotron>
-    </div>
-  );
-};
+class Home extends Component {
+  /* when a user logs in, we will check the accountType field on the JWT to determine what compnent needs to be rendered */
+  state = {
+    accountType: "",
+    username: "",
+    id: ""
+  }
+
+  componentDidMount() {
+    /* This is where the JWT would be decoded and the state would be set */
+    /* const token = jwt_decode(localStorage.getItem('jwt')) */
+    /* this.setState({accountType: token.accountType}) */
+  }
+
+  render() {
+    if (this.state.accountType === "customer") {
+      return <CustomerHomePage username={this.state.username} />;
+    } else if (this.state.accountType === "worker") {
+      return <WorkerDashboard workerId={this.state.id} />;
+    } else {
+      return <Register />;
+    }
+  }
+}
 
 export default Home;
