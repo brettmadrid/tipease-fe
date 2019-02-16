@@ -2,6 +2,7 @@ import React, { Component } from "react";
 
 class WorkerDashboard extends Component {
   state = {
+    id: 1,
     photo: "https://images.pexels.com/photos/684387/pexels-photo-684387.jpeg?cs=srgb&dl=achievement-adult-agent-684387.jpg&fm=jpg",
     fname: "Jesse",
     lname: "Anderson",
@@ -18,7 +19,7 @@ class WorkerDashboard extends Component {
     const { photo, fname, lname, jobTitle, tagline, totalTips } = this.state;
     return (
       <div>
-        <img src={this.state.photo} alt="a pic"></img>
+        <img src={photo} alt="a pic"></img>
         <h2>
           {fname} {lname}
         </h2>

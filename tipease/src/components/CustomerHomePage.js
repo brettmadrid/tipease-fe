@@ -1,4 +1,8 @@
 import React, { Component } from "react";
+import { Card, CardImg, CardText, CardBody,
+  CardSubtitle, Button } from 'reactstrap';
+
+import '../App.css'
 
 class CustomerHomePage extends Component {
   constructor(props) {
@@ -7,25 +11,29 @@ class CustomerHomePage extends Component {
       customer: this.props.username,
       workers: [
         {
-          photo: "",
+          id: 1,
+          photo: "https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180",
           fname: "Jesse",
           lname: "Anderson",
           jobTitle: "Back End Developer"
         },
         {
-          photo: "",
+          id: 2,
+          photo: "https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180",
           fname: "Brett",
           lname: "Madrid",
           jobTitle: "Front End Developer"
         },
         {
-          photo: "",
+          id: 3,
+          photo: "https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180",
           fname: "Brandon",
           lname: "Desselle",
           jobTitle: "UI Developer"
         },
         {
-          photo: "",
+          id: 4,
+          photo: "https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180",
           fname: "Edward",
           lname: "Gonzalez",
           jobTitle: "Scrum Master"
@@ -41,18 +49,34 @@ class CustomerHomePage extends Component {
   render() {
     return (
       <>
-        <p>Welcome, {this.state.customer}. Who would you like to tip?</p>
-        <hr />
-        <div>
+        <legend classname="welcome-tip">Welcome, {this.state.customer}. Who would you like to tip?</legend>
+        <div className="card-container">
           {this.state.workers.map(worker => {
             return (
-              <>
-                <h2>
-                  {worker.fname} {worker.lname}
-                </h2>
-                <h3>{worker.jobTitle}</h3>
-                <hr />
-              </>
+              <Card className="card" key={worker.id}>
+                <CardImg
+                  key={worker.id}
+                  className="card-img"
+                  top
+                  width="100%"
+                  src={worker.photo}
+                  alt="Card image cap"
+                />
+                <CardBody>
+                  <CardSubtitle>{worker.fname} {worker.lname}</CardSubtitle>
+                  <CardText>
+                    {worker.jobTitle}
+                  </CardText>
+                  <Button>Tip</Button>
+                </CardBody>
+              </Card>
+              // <>
+              //   <h2>
+              //     {worker.fname} {worker.lname}
+              //   </h2>
+              //   <h3>{worker.jobTitle}</h3>
+              //   <hr />
+              // </>
             );
           })}
         </div>
