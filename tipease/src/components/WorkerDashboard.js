@@ -1,9 +1,11 @@
 import React, { Component } from "react";
 
+import '../App.css'
+
 class WorkerDashboard extends Component {
   state = {
     id: 1,
-    photo: "https://images.pexels.com/photos/684387/pexels-photo-684387.jpeg?cs=srgb&dl=achievement-adult-agent-684387.jpg&fm=jpg",
+    photo: "https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180",
     fname: "Jesse",
     lname: "Anderson",
     jobTitle: "Back End Developer",
@@ -18,7 +20,7 @@ class WorkerDashboard extends Component {
   render() {
     const { photo, fname, lname, jobTitle, tagline, totalTips } = this.state;
     return (
-      <div>
+      <div className="worker-dashboard">
         <img src={photo} alt="a pic"></img>
         <h2>
           {fname} {lname}

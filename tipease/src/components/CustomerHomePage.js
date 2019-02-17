@@ -70,13 +70,6 @@ class CustomerHomePage extends Component {
                   <Button>Tip</Button>
                 </CardBody>
               </Card>
-              // <>
-              //   <h2>
-              //     {worker.fname} {worker.lname}
-              //   </h2>
-              //   <h3>{worker.jobTitle}</h3>
-              //   <hr />
-              // </>
             );
           })}
         </div>

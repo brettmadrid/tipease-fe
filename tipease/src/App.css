@@ -46,3 +46,8 @@
   font-size: 1rem;
   margin-top: 5%;
 }
+
+.worker-dashboard {
+  width: 500px;
+  margin: 2%;
+}

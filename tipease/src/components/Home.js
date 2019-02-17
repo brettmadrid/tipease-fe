@@ -6,7 +6,7 @@ import Register from "./Register";
 class Home extends Component {
   /* when a user logs in, we will check the accountType field on the JWT to determine what compnent needs to be rendered */
   state = {
-    accountType: "customer",
+    accountType: "worker",
     username: "Brett",
     id: "1"
   }
