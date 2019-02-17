@@ -15,6 +15,9 @@ class WorkerDashboard extends Component {
 
   componentDidMount() {
     /* This is where an axios.get would be done to get worker by id */
+    // Axios.get("")
+    //   .then(response => this.setState({ ?????: response.data }))
+    //   .catch(err => console.log(err));
   }
 
   updateAccount = user => {

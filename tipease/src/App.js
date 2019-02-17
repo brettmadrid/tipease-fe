@@ -4,9 +4,7 @@ import { Route } from "react-router-dom";
 
 import Home from "./components/Home";
 import Register from "./components/Register";
-import WorkerDashboard from "./components/WorkerDashboard";
-import CustomerHomePage from "./components/CustomerHomePage";
-import LeaveTip from "./components/LeaveTip";
+import Login from "./components/Login"
 
 class App extends Component {
   constructor() {
@@ -29,31 +27,13 @@ class App extends Component {
       <div className="App">
         <Navigation />
         {localStorage.getItem("user") ? (
-          <Route
-            exact path="/"
-            render={props => <Home {...props} /> }
-            component={Home}
-          />
-          ) : null}
-        <Route exact path="/register" component={Register} />
-        {/* {localStorage.getItem("user") ? (
-          <Route
-          exact
-          path="/workerDashboard"
-          render={props => <WorkerDashboard {...props} />}
-          />
-        ) : null} */}
+          <Route exact path="/" render={props => <Home {...props} /> } />
+        ) : null}
 
-        {/* <Route
-          exact
-          path="/workers"
-          render={props => <CustomerHomePage {...props} />}
-          />
-          <Route
-          exact
-          path="/workers/:id"
-          render={props => <LeaveTip {...props} />}
-        /> */}
+        <Route exact path="/register" component={Register} />
+
+        <Route path="/login" render={props => <Login {...props} /> } />
+
       </div>
     );
   }
