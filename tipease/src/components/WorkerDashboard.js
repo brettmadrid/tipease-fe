@@ -17,6 +17,16 @@ class WorkerDashboard extends Component {
     /* This is where an axios.get would be done to get worker by id */
   }
 
+  updateAccount = user => {
+    // Axios.put(`http://localhost:5000/friends/${this.state.id}`, user)
+    //   .then(response => {
+    //     this.refresh();
+    //   })
+    //   .catch(error => {
+    //     console.log(error);
+    //   });
+  };
+
   render() {
     const { photo, fname, lname, jobTitle, tagline, totalTips } = this.state;
     return (

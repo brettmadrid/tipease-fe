@@ -8,7 +8,6 @@ class CustomerHomePage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      customer: this.props.username,
       workers: [
         {
           id: 1,
@@ -46,10 +45,12 @@ class CustomerHomePage extends Component {
     /* This is where an axios.get would be done to get all of the workers from the database, then set your this.state.workers to the response.data */
   }
 
+
+
   render() {
     return (
       <>
-        <legend classname="welcome-tip">Welcome, {this.state.customer}. Who would you like to tip?</legend>
+        <legend className="welcome-tip">Welcome, {this.props.username}. Who would you like to tip?</legend>
         <div className="card-container">
           {this.state.workers.map(worker => {
             return (

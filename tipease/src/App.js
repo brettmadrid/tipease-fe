@@ -5,6 +5,8 @@ import { Route } from "react-router-dom";
 import Home from "./components/Home";
 import Register from "./components/Register";
 import WorkerDashboard from "./components/WorkerDashboard";
+import CustomerHomePage from "./components/CustomerHomePage";
+import LeaveTip from "./components/LeaveTip";
 
 class App extends Component {
   constructor() {
@@ -26,22 +28,27 @@ class App extends Component {
     return (
       <div className="App">
         <Navigation />
-
         <Route exact path="/" component={Home} />
         <Route exact path="/register" component={Register} />
 
         {/* {localStorage.getItem("user") ? (
           <Route
-            exact
-            path="/workers"
-            render={props => <WorkerDashboard {...props} />}
+          exact
+          path="/workerDashboard"
+          render={props => <WorkerDashboard {...props} />}
           />
         ) : null} */}
 
         {/* <Route
           exact
+          path="/workers"
+          render={props => <CustomerHomePage {...props} />}
+          />
+          
+          <Route
+          exact
           path="/workers/:id"
-          render={props => <Worker {...props} worker={this.state.worker} />}
+          render={props => <LeaveTip {...props} />}
         /> */}
       </div>
     );
