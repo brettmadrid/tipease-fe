@@ -28,11 +28,13 @@ class App extends Component {
         <Navigation />
         {localStorage.getItem("user") ? (
           <Route exact path="/" render={props => <Home {...props} /> } />
-        ) : null}
+        ) : (
+          <Route path="/" render={props => <Login {...props} /> } />
+        )}
 
         <Route exact path="/register" component={Register} />
 
-        <Route path="/login" render={props => <Login {...props} /> } />
+        {/* <Route path="/login" render={props => <Login {...props} /> } /> */}
 
       </div>
     );
