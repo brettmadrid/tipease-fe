@@ -18,12 +18,26 @@ class Register extends Component {
     isRegistered: false
   };
 
+  submitHandler = e => {
+    // Might need to send this object to the server
+    const user = {
+      username: this.state.username,
+      password: this.state.password,
+      isWorker: this.state.isWorker
+    };
+    // store username on localStorage so user doesn't have to re-log back in
+    localStorage.setItem('user', this.state.username);
+    this.setState({isRegistered: true});
+    // Next line loads our Home component set up by Router as "/"
+    this.props.history.push("/");
+  };
+
   render() {
     if (!this.state.isWorker) {
       return (
         <div className="registration-container">
           <legend className="registration-legend">Registration</legend>
-          <Form className="input-form" onSubmit={this.handleSubmit}>
+          <Form className="input-form">
             <FormGroup>
               <Label for="username">username</Label>
               <Input
@@ -73,7 +87,7 @@ class Register extends Component {
                 </Label>
               </FormGroup>
             </FormGroup>
-            <Button>Register</Button>
+            <Button outline onClick={e => this.submitHandler()}>Register</Button>
           </Form>
         </div>
       );
@@ -81,7 +95,7 @@ class Register extends Component {
       return (
         <div className="registration-container">
           <legend className="registration-legend">Registration</legend>
-          <Form className="input-form" onSubmit={this.handleSubmit}>
+          <Form className="input-form">
             <FormGroup>
               <Label for="username">username</Label>
               <Input
@@ -168,7 +182,7 @@ class Register extends Component {
                 />
               </FormGroup>
             </FormGroup>
-            <Button>Submit</Button>
+            <Button outline onClick={e => this.submitHandler()}>Register</Button>
           </Form>
         </div>
       );

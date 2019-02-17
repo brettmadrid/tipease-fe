@@ -28,9 +28,14 @@ class App extends Component {
     return (
       <div className="App">
         <Navigation />
-        <Route exact path="/" component={Home} />
+        {localStorage.getItem("user") ? (
+          <Route
+            exact path="/"
+            render={props => <Home {...props} /> }
+            component={Home}
+          />
+          ) : null}
         <Route exact path="/register" component={Register} />
-
         {/* {localStorage.getItem("user") ? (
           <Route
           exact
@@ -44,7 +49,6 @@ class App extends Component {
           path="/workers"
           render={props => <CustomerHomePage {...props} />}
           />
-          
           <Route
           exact
           path="/workers/:id"
