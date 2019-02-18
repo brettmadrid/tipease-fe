@@ -26,15 +26,13 @@ class App extends Component {
     return (
       <div className="App">
         <Navigation />
-        {localStorage.getItem("user") ? (
+        {/* {localStorage.getItem("jwt") ? ( */}
           <Route exact path="/" render={props => <Home {...props} /> } />
-        ) : (
-          <Route path="/" render={props => <Login {...props} /> } />
-        )}
+        {/* //) : ( */}
+          <Route exact path="/login" render={props => <Login {...props} /> } />
+        {/* //)} */}
 
         <Route exact path="/register" component={Register} />
-
-        {/* <Route path="/login" render={props => <Login {...props} /> } /> */}
 
       </div>
     );

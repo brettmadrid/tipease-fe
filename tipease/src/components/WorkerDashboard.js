@@ -1,23 +1,24 @@
 import React, { Component } from "react";
+import Axios from 'axios';
 
 import '../App.css'
 
 class WorkerDashboard extends Component {
-  state = {
-    id: 1,
-    photo: "https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180",
-    fname: "Jesse",
-    lname: "Anderson",
-    jobTitle: "Back End Developer",
-    tagline: "NodeJS for life!",
-    totalTips: 120
-  };
+  constructor(props) {
+    super(props);
+  this.state = []
+}
 
   componentDidMount() {
+    const id = this.props.workerID;
     /* This is where an axios.get would be done to get worker by id */
-    // Axios.get("")
-    //   .then(response => this.setState({ ?????: response.data }))
-    //   .catch(err => console.log(err));
+    Axios.get(`https://tipease-server.herokuapp.com/api/worker/${id}`)
+      .then(response =>
+        this.setState(
+          response.data[0]
+        )
+      )
+      .catch(err => console.log(err));
   }
 
   updateAccount = user => {
