@@ -15,7 +15,10 @@ class Home extends Component {
 
 
   componentDidMount() {
-    /* This is where the JWT would be decoded and the state would be set */
+    this.checkForToken()
+  };
+
+  checkForToken(){
     const token = localStorage.getItem('jwt');
 
     if (token) {
@@ -25,14 +28,11 @@ class Home extends Component {
       this.setState({
         accountType: decoded.accountType,
         username: decoded.username,
-        id: decoded.id
+        id: decoded.id,
       })
     }
-    if (!this.state.isReloaded) {
-      this.setState({ isReloaded: true })
-      window.location.reload();
-    }
-  };
+  }
+
 
   render() {
     if (this.state.accountType === "customer") {
@@ -40,6 +40,7 @@ class Home extends Component {
     } else if (this.state.accountType === "worker") {
       return <WorkerDashboard workerID={this.state.id} />
     } else {
+      this.checkForToken();
       return <Login />;
     }
   }
