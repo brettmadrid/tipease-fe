@@ -18,6 +18,12 @@ class WorkerDashboard extends Component {
       .catch(err => console.log(err));
   }
 
+  deleteAccount = (e, id) => {
+    Axios.delete(`https://tipease-server.herokuapp.com/api/worker/${id}`)
+    .then(response => console.log(response))
+    .catch(err => console.log(err))
+  }
+
   updateAccount = user => {
     
     // Axios.put(`https://tipease-server.herokuapp.com/api/worker/${id}`, user)
@@ -47,6 +53,7 @@ class WorkerDashboard extends Component {
     const { photo, fname, lname, jobTitle, tagline, totalTips } = this.state;
     return (
       <div className="worker-dashboard">
+        <h3>Service Worker Update Form</h3>
         <img src={photo} alt="a pic" />
         <Form className="worker-dashboard-form" onSubmit={this.updateAccount}>
           <FormGroup>
@@ -99,6 +106,7 @@ class WorkerDashboard extends Component {
           </FormGroup>
           <h3>Total Tips Recieved: ${totalTips}</h3>
           <Button outline type="submit">Update Information</Button>
+          <Button outline type="button" onClick={() => this.deleteAccount(this.props.workerID) }>Delete Profile</Button>
         </Form>
       </div>
     );
