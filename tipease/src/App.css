@@ -70,3 +70,13 @@ div.card-body {
   flex-direction: column;
   align-items: center;
 }
+
+.worker-dashboard-form {
+  border: 1px solid #A26CCC;
+  border-radius: 5px;
+  padding: 2%;
+}
+
+.worker-dashboard Button {
+  margin: 4% 0;
+}
