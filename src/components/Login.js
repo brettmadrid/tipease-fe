@@ -1,6 +1,6 @@
 import React from "react";
-import { Redirect, Link } from 'react-router-dom';
-import Axios from 'axios';
+import { Redirect, Link } from "react-router-dom";
+import Axios from "axios";
 import { Button, Form, FormGroup, Label, Input } from "reactstrap";
 
 import "../App.css";
@@ -19,12 +19,12 @@ export default class Login extends React.Component {
       username: this.state.username,
       password: this.state.password,
       accountType: this.state.accountType
-    }
+    };
 
     Axios.post("https://tipease-server.herokuapp.com/api/login", user)
       .then(response => {
-        localStorage.setItem('jwt', response.data.token)
-        this.setState({ isLoggedIn: true })
+        localStorage.setItem("jwt", response.data.token);
+        this.setState({ isLoggedIn: true });
         // window.location.reload();
       })
       .catch(error => {
@@ -44,9 +44,8 @@ export default class Login extends React.Component {
   };
 
   render() {
-
     if (this.state.isLoggedIn) {
-      return <Redirect to="/" />
+      return <Redirect to="/" />;
     }
 
     return (
@@ -75,14 +74,16 @@ export default class Login extends React.Component {
               onChange={this.handleInput}
             />
           </FormGroup>
-          <Button outline type="submit">
-            Submit
-          </Button>
-          <Link to="/register">
-            <Button outline type="button" >
-              Register
+          <div className="login-buttons">
+            <Button outline type="submit">
+              Submit
             </Button>
-          </Link>
+            <Link to="/register">
+              <Button outline type="button">
+                Register
+              </Button>
+            </Link>
+          </div>
         </Form>
       </div>
     );

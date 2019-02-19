@@ -7,9 +7,9 @@ import Login from "./Login";
 class Home extends Component {
   /* when a user logs in, we will check the accountType field on the JWT to determine what compnent needs to be rendered */
   state = {
-    accountType: "",
-    username: "",
-    id: "",
+    accountType: "customer",
+    username: "Brett",
+    id: "1",
     isReloaded: false
   };
 

@@ -19,15 +19,22 @@ export default class Navigation extends React.Component {
       isOpen: false
     };
   }
+
   toggle() {
     this.setState({
       isOpen: !this.state.isOpen
     });
   }
+
+  logout = () => {
+    localStorage.removeItem("token")
+    this.props.history.push("/")
+  }
+
   render() {
     return (
       <div>
-        <Navbar style={{ backgroundColor: "#A26CCC" }} light expand="md">
+        <Navbar style={{ backgroundColor: "#63DA00" }} light expand="md">
           <NavbarBrand href="/" style={{ fontSize: "2rem" }}>TipEASE</NavbarBrand>
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>

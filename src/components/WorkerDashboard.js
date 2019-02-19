@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Axios from "axios";
-import { Form, Input, FormText, Button, FormGroup, Label } from "reactstrap";
+import { Form, Input, Button, FormGroup, Label } from "reactstrap";
 
 import "../App.css";
 
