@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import Modal from "react-responsive-modal";
+import Axios from 'axios';
 import {
   Card,
   CardImg,
@@ -11,8 +13,6 @@ import {
   FormText,
   FormGroup
 } from "reactstrap";
-import CurrencyInput from "react-currency-input";
-import Modal from "react-responsive-modal";
 
 import "../App.css";
 
@@ -55,12 +55,17 @@ class CustomerHomePage extends Component {
         }
       ],
       open: false,
-      amount: "0.00"
+      amount: "0.00",
+      id: null
     };
   }
 
   componentDidMount() {
     /* This is where an axios.get would be done to get all of the workers from the database, then set your this.state.workers to the response.data */
+    Axios.get("https://tipease-server.herokuapp.com/api/customer")
+      .then(response => console.log(response))
+      //.then(response => this.setState(workers: response.data))
+      .catch(err => console.log(err));
   }
 
   toggle = () => {
@@ -73,8 +78,11 @@ class CustomerHomePage extends Component {
     this.setState({ amount: maskedvalue });
   }
 
-  onOpenModal = () => {
-    this.setState({ open: true });
+  onOpenModal = id => {
+    this.setState({
+      open: true,
+      id: id
+    });
   };
 
   onCloseModal = () => {
@@ -86,15 +94,22 @@ class CustomerHomePage extends Component {
     this.setState({ [e.target.name]: e.target.value });
   };
 
-  submitHandler = e => {
-    e.preventDefault();
-    const amount = this.state.amount;
+  tipSubmitHandler = (id, amount) => {
+    console.log("tipSubmitHandler args: ", amount)
     // Update server with amount
-    //  close modal
+    Axios.post(`https://tipease-server.herokuapp.com/api/customer/worker/${id}`, amount)
+      .then(response => {
+        console.log("TipResponse: ", response)
+        //  close modal
+        this.setState({open: false})
+      })
+      .catch(error => {
+        console.log(error);
+      });
   };
 
   render() {
-    const { open } = this.state;
+    const { open, amount, id } = this.state;
     return (
       <>
         <legend className="welcome-tip">
@@ -117,9 +132,9 @@ class CustomerHomePage extends Component {
                     {worker.fname} {worker.lname}
                   </CardSubtitle>
                   <CardText>{worker.jobTitle}</CardText>
-                  <Button color="danger" onClick={this.onOpenModal}>
-                    Tip
-                  </Button>
+                  <CardText>{worker.tagline}</CardText>
+                  {/* Store id on state when the tip button is clicked to open modal */}
+                  <Button color="danger" onClick={() => this.onOpenModal(worker.id)}>Tip</Button>
                 </CardBody>
               </Card>
             );
@@ -131,7 +146,7 @@ class CustomerHomePage extends Component {
               onClose={this.onCloseModal}
               center
             >
-              <Form onSubmit={this.submitHandler}>
+              <Form onSubmit={this.tipSubmitHandler(id, amount)}>
               <FormText className="tip-amount-text">Enter Tip Amount</FormText>
                 <FormGroup>
                   <Input
@@ -139,10 +154,14 @@ class CustomerHomePage extends Component {
                     bsSize="sm"
                     type="currency"
                     name="amount"
-                    value={this.state.amount}
+                    value={amount}
                     onChange={this.handleInput}
                   />
-                  <Button className="tip-button" type="submit">Process</Button>
+                  <Button
+                    className="tip-button"
+                    type="submit"
+                  >Process
+                  </Button>
                 </FormGroup>
               </Form>
             </Modal>
