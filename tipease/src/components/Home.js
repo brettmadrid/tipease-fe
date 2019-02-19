@@ -23,16 +23,17 @@ class Home extends Component {
 
     if (token) {
       const decoded = jwt_decode(token);
-
-      console.log(token)
-      this.setState({
-        accountType: decoded.accountType,
-        username: decoded.username,
-        id: decoded.id,
-      })
+      const { exp, accountType, username, id } = decoded;
+      const currentTime = +(Date.now().toString().slice(0,10));
+      if (exp > currentTime){
+        this.setState({
+          accountType: accountType,
+          username: username,
+          id: id,
+        })
+      }
     }
   }
-
 
   render() {
     if (this.state.accountType === "customer") {

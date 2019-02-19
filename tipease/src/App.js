@@ -4,7 +4,8 @@ import { Route } from "react-router-dom";
 
 import Home from "./components/Home";
 import Register from "./components/Register";
-import Login from "./components/Login"
+import Login from "./components/Login";
+import WorkerDashboard from './components/WorkerDashboard';
 
 class App extends Component {
   constructor() {
@@ -33,6 +34,8 @@ class App extends Component {
         {/* //)} */}
 
         <Route exact path="/register" component={Register} />
+
+        <Route exact path="/dashboard" component={WorkerDashboard} />
 
       </div>
     );

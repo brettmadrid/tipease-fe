@@ -59,15 +59,6 @@ export default class Navigation extends React.Component {
                 >Register
                 </NavLink>
               </NavItem>
-              {/* <NavItem>
-                <NavLink
-                  tag={RRNavLink}
-                  exact
-                  to="/logout"
-                  activeClassName="activeNavButton"
-                >Logout
-                </NavLink>
-              </NavItem> */}
             </Nav>
           </Collapse>
         </Navbar>

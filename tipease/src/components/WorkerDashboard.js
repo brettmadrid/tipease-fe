@@ -7,7 +7,7 @@ import "../App.css";
 class WorkerDashboard extends Component {
   constructor(props) {
     super(props);
-    this.state = [];
+    this.state = []
   }
 
   componentDidMount() {
@@ -19,8 +19,9 @@ class WorkerDashboard extends Component {
   }
 
   updateAccount = user => {
-    // Axios.put(`http://localhost:5000/friends/${this.state.id}`, user)
-    //   .then(response => {
+    
+    // Axios.put(`https://tipease-server.herokuapp.com/api/worker/${id}`, user)
+    //   .then(response => { 
     //     this.refresh();
     //   })
     //   .catch(error => {
@@ -36,13 +37,18 @@ class WorkerDashboard extends Component {
     //   : this.setState({ isWorker: false });
   };
 
+  fileSelectedHandler = async e => {
+    e.preventDefault();
+    console.log(e.target.files[0]);
+  }
+
 
   render() {
     const { photo, fname, lname, jobTitle, tagline, totalTips } = this.state;
     return (
       <div className="worker-dashboard">
         <img src={photo} alt="a pic" />
-        <Form className="worker-dashboard-form">
+        <Form className="worker-dashboard-form" onSubmit={this.updateAccount}>
           <FormGroup>
             <Label for="fname-input">First Name</Label>
             <Input
@@ -87,8 +93,12 @@ class WorkerDashboard extends Component {
               onChange={this.handleInput}
             />
           </FormGroup>
+          <FormGroup>
+            <Label for="photo-input">Upload Image file</Label>
+            <Input type="file" onChange={this.fileSelectedHandler} />
+          </FormGroup>
           <h3>Total Tips Recieved: ${totalTips}</h3>
-          <Button outline>Update Information</Button>
+          <Button outline type="submit">Update Information</Button>
         </Form>
       </div>
     );
