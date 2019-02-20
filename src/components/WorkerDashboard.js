@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Axios from "axios";
+import jwt_decode from "jwt-decode";
 import { Form, Input, Button, FormGroup, Label } from "reactstrap";
 
 import "../App.css";
@@ -20,28 +21,18 @@ class WorkerDashboard extends Component {
 
   componentDidMount() {
     this.refresh();
-    // const id = this.props.workerID;
-    // /* This is where an axios.get would be done to get worker by id */
-    // Axios.get(`https://tipease-server.herokuapp.com/api/worker/${id}`)
-    //   .then(response => {
-    //     const { id, photo, fname, lname, jobTitle, tagline, totalTips } = response.data[0]
-    //     this.setState({
-    //       id,
-    //       photo,
-    //       fname,
-    //       lname,
-    //       jobTitle,
-    //       tagline,
-    //       totalTips
-    //     })
-    //   })
-    //   .catch(err => console.log(err));
   }
 
   refresh = () => {
-    const id = this.props.workerID;
+    const token = localStorage.getItem("jwt");
+    const options = {
+      headers: {
+        Authorization: token
+      }
+    };
+    const { id } = jwt_decode(token);
     /* This is where an axios.get would be done to get worker by id */
-    Axios.get(`https://tipease-server.herokuapp.com/api/worker/${id}`)
+    Axios.get(`https://tipease-server.herokuapp.com/api/worker/${id}`, options)
       .then(response => {
         const {
           id,
@@ -62,16 +53,23 @@ class WorkerDashboard extends Component {
           totalTips
         });
       })
-      .catch(err => console.log(err));
+      .catch(err => console.log("Dashboard error:", err));
   };
 
   deleteAccount = id => {
-    Axios.delete(`https://tipease-server.herokuapp.com/api/worker/${id}`)
+    Axios.delete(`https://tipease-server.herokuapp.com/api/worker/delete/${id}`)
       .then(response => console.log(response))
       .catch(err => console.log(err));
   };
 
   updateAccount = e => {
+    e.preventDefault();
+    const token = localStorage.getItem("jwt");
+    const options = {
+      headers: {
+        Authorization: token
+      }
+    };
     const {
       id,
       photo,
@@ -90,8 +88,12 @@ class WorkerDashboard extends Component {
       tagline,
       totalTips
     };
-
-    Axios.put(`https://tipease-server.herokuapp.com/api/worker/${id}`, user)
+    console.log(id, user);
+    Axios.put(
+      `https://tipease-server.herokuapp.com/api/worker/update/${id}`,
+      user,
+      options
+    )
       .then(response => {
         this.refresh();
       })
@@ -109,9 +111,6 @@ class WorkerDashboard extends Component {
     e.preventDefault();
     console.log(e.target.files[0]);
   };
-
-  // checkForToken(){
-  //   const token = localStorage.getItem('jwt');
 
   render() {
     const { photo, fname, lname, jobTitle, tagline, totalTips } = this.state;

@@ -53,7 +53,6 @@ export default class Login extends React.Component {
         <legend className="login-legend">Login</legend>
         <Form className="input-form" onSubmit={this.submitHandler}>
           <FormGroup>
-            <Label for="username">username</Label>
             <Input
               type="text"
               name="username"
@@ -64,7 +63,6 @@ export default class Login extends React.Component {
             />
           </FormGroup>
           <FormGroup>
-            <Label for="password">Password</Label>
             <Input
               type="password"
               name="password"
@@ -78,14 +76,7 @@ export default class Login extends React.Component {
             <Button outline type="submit">
               Submit
             </Button>
-            <Link to="/register">
-              {/* <Button outline type="button">
-                Register
-              </Button> */}
-              <Nav>
-                <NavLink href="/register">Don't have an account?</NavLink>
-              </Nav>
-            </Link>
+            <Link to="/register">Don't have an account?</Link>
           </div>
         </Form>
       </div>

@@ -1,49 +1,53 @@
 import React, { Component } from "react";
-import jwt_decode from 'jwt-decode';
-import CustomerHomePage from "./CustomerHomePage";
-import WorkerDashboard from "./WorkerDashboard";
-import Login from "./Login";
+import { Redirect } from "react-router-dom";
+import jwt_decode from "jwt-decode";
 
 class Home extends Component {
   /* when a user logs in, we will check the accountType field on the JWT to determine what compnent needs to be rendered */
   state = {
-    accountType: "worker",
-    username: "Brett",
-    id: "1",
-    isReloaded: false
+    username: "",
+    accountType: "",
+    id: "",
+    isLoading: true
   };
-
 
   componentDidMount() {
-    this.checkForToken()
-  };
-
-  checkForToken(){
-    const token = localStorage.getItem('jwt');
-    const options = {
-      headers: {
-        Authorization: token
-      }
-    };
+    // console.log("Home.js - inside ComponentDidMount");
+    const token = localStorage.getItem("jwt");
 
     if (token) {
-      const decoded = jwt_decode(token);
-      const { accountType, username, id } = decoded;
-        this.setState({
-          accountType: accountType,
-          username: username,
-          id: id,
-        })
+      const { username, accountType, id } = jwt_decode(token);
+      // console.log("Account type", accountType);
+      this.setState({ username, accountType, id, isLoading: false });
     }
+    this.setState({ isLoading: false });
   }
 
   render() {
+    // console.log("Home.js - inside render");
+    if (this.state.isLoading) {
+      return <div>Loading...</div>;
+    }
     if (this.state.accountType === "customer") {
-      return <CustomerHomePage username={this.state.username} />;
+      return (
+        <Redirect
+          to={{
+            pathname: "/customer",
+            state: { username: this.state.username }
+          }}
+        />
+      );
     } else if (this.state.accountType === "worker") {
-      return <WorkerDashboard workerID={this.state.id} />
+      return (
+        <Redirect
+          to={{
+            pathname: "/dashboard",
+            state: { id: this.state.id }
+          }}
+        />
+      );
     } else {
-      return <Login />;
+      return <Redirect to="/login" />;
     }
   }
 }

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Modal from "react-responsive-modal";
-import Axios from 'axios';
+import Axios from "axios";
+import jwt_decode from "jwt-decode";
 import {
   Card,
   CardImg,
@@ -20,49 +21,18 @@ class CustomerHomePage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      workers: [
-        {
-          id: 1,
-          photo:
-            "https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180",
-          fname: "Jesse",
-          lname: "Anderson",
-          jobTitle: "Back End Developer"
-        },
-        {
-          id: 2,
-          photo:
-            "https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180",
-          fname: "Brett",
-          lname: "Madrid",
-          jobTitle: "Front End Developer"
-        },
-        {
-          id: 3,
-          photo:
-            "https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180",
-          fname: "Brandon",
-          lname: "Desselle",
-          jobTitle: "UI Developer"
-        },
-        {
-          id: 4,
-          photo:
-            "https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180",
-          fname: "Edward",
-          lname: "Gonzalez",
-          jobTitle: "Scrum Master"
-        }
-      ],
+      username: "",
+      workers: [],
       open: false,
-      amount: "0.00",
+      tip: "0.00",
       id: null,
       tipSuccess: false
     };
   }
 
   componentDidMount() {
-    const token = localStorage.getItem('jwt');
+    const token = localStorage.getItem("jwt");
+    const { username, id } = jwt_decode(token);
     const options = {
       headers: {
         Authorization: token
@@ -70,11 +40,15 @@ class CustomerHomePage extends Component {
     };
     /* This is where an axios.get would be done to get all of the workers from the database, then set your this.state.workers to the response.data */
     Axios.get("https://tipease-server.herokuapp.com/api/customer", options)
-      .then(response => console.log(response))
-      .then(response => this.setState({
-        workers: response.data,
-        tipSuccess: true
-      }))
+      // .then(response => console.log(response))
+      .then(response =>
+        this.setState({
+          username,
+          workers: response.data,
+          tipSuccess: true,
+          id
+        })
+      )
       .catch(err => console.log(err));
   }
 
@@ -104,14 +78,26 @@ class CustomerHomePage extends Component {
     this.setState({ [e.target.name]: e.target.value });
   };
 
-  tipSubmitHandler = (id, amount) => {
-    console.log("tipSubmitHandler args: ", amount)
+  tipSubmitHandler = e => {
+    e.preventDefault();
+    const { id, tip } = this.state;
+    const token = localStorage.getItem("jwt");
+    const options = {
+      headers: {
+        Authorization: token
+      }
+    };
+    console.log("tipSubmitHandler args: ", tip);
     // Update server with amount
-    Axios.post(`https://tipease-server.herokuapp.com/api/customer/worker/${id}`, amount)
+    Axios.post(
+      `https://tipease-server.herokuapp.com/api/customer/worker/${id}`,
+      { tip: +tip },
+      options
+    )
       .then(response => {
-        console.log("TipResponse: ", response)
+        console.log("TipResponse: ", response);
         //  close modal
-        this.setState({open: false})
+        this.setState({ open: false });
       })
       .catch(error => {
         console.log(error);
@@ -119,11 +105,12 @@ class CustomerHomePage extends Component {
   };
 
   render() {
-    const { open, amount, id } = this.state;
+    const { open, tip } = this.state;
     return (
       <>
         <legend className="welcome-tip">
-          Welcome, {this.props.username}. Who would you like to tip?
+          Welcome, {this.state.username.toUpperCase()}. Who would you like to
+          tip?
         </legend>
         <div className="card-container">
           {this.state.workers.map(worker => {
@@ -144,7 +131,15 @@ class CustomerHomePage extends Component {
                   <CardText>{worker.jobTitle}</CardText>
                   <CardText>{worker.tagline}</CardText>
                   {/* Store id on state when the tip button is clicked to open modal */}
-                  <Button  color="success" size="lg" type="button" onClick={() => this.onOpenModal(worker.id)} block>Leave Tip</Button>
+                  <Button
+                    color="success"
+                    size="lg"
+                    type="button"
+                    onClick={() => this.onOpenModal(worker.id)}
+                    block
+                  >
+                    Leave Tip
+                  </Button>
                 </CardBody>
               </Card>
             );
@@ -156,21 +151,21 @@ class CustomerHomePage extends Component {
               onClose={this.onCloseModal}
               center
             >
-              <Form onSubmit={this.tipSubmitHandler(id, amount)}>
-              <FormText className="tip-amount-text">Enter Tip Amount</FormText>
+              <Form onSubmit={this.tipSubmitHandler}>
+                <FormText className="tip-amount-text">
+                  Enter Tip Amount
+                </FormText>
                 <FormGroup>
                   <Input
                     className="tip-input-field"
                     bsSize="sm"
                     type="currency"
-                    name="amount"
-                    value={amount}
+                    name="tip"
+                    value={tip}
                     onChange={this.handleInput}
                   />
-                  <Button
-                    className="tip-button"
-                    type="submit"
-                  >Process
+                  <Button className="tip-button" type="submit">
+                    Process
                   </Button>
                 </FormGroup>
               </Form>

@@ -1,5 +1,5 @@
 import React from "react";
-import { NavLink as RRNavLink } from "react-router-dom";
+import { NavLink as RRNavLink, Redirect } from "react-router-dom";
 import {
   Collapse,
   Navbar,
@@ -14,28 +14,29 @@ export default class Navigation extends React.Component {
   constructor(props) {
     super(props);
 
-    this.toggle = this.toggle.bind(this);
     this.state = {
       isOpen: false
     };
   }
 
-  toggle() {
+  toggle = () => {
     this.setState({
       isOpen: !this.state.isOpen
     });
-  }
+  };
 
   logout = () => {
-    localStorage.removeItem("token")
-    this.props.history.push("/")
-  }
+    localStorage.removeItem("token");
+    // return <Redirect to="/login" />
+  };
 
   render() {
     return (
       <div>
         <Navbar style={{ backgroundColor: "#63DA00" }} light expand="md">
-          <NavbarBrand href="/" style={{ fontSize: "2rem" }}>TipEASE</NavbarBrand>
+          <NavbarBrand href="/" style={{ fontSize: "2rem" }}>
+            TipEASE
+          </NavbarBrand>
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
@@ -45,7 +46,8 @@ export default class Navigation extends React.Component {
                   exact
                   to="/"
                   activeClassName="activeNavButton"
-                >Home
+                >
+                  Home
                 </NavLink>
               </NavItem>
               <NavItem>
@@ -54,7 +56,8 @@ export default class Navigation extends React.Component {
                   exact
                   to="/login"
                   activeClassName="activeNavButton"
-                >Login
+                >
+                  Login
                 </NavLink>
               </NavItem>
               <NavItem>
@@ -63,7 +66,19 @@ export default class Navigation extends React.Component {
                   exact
                   to="/register"
                   activeClassName="activeNavButton"
-                >Register
+                >
+                  Register
+                </NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink
+                  onClick={this.logout}
+                  tag={RRNavLink}
+                  exact
+                  to="/login"
+                  activeClassName="activeNavButton"
+                >
+                  Log Out
                 </NavLink>
               </NavItem>
             </Nav>
