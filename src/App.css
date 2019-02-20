@@ -21,7 +21,8 @@
 }
 
 .registration-legend {
-  margin: 2%;
+  width: 150px;
+  margin: 2% auto 5%;
 }
 
 .login-legend {
@@ -90,5 +91,10 @@
 
 .tip-input-field {
   margin: 10% auto;
+}
+
+.register-buttons {
+  display: flex;
+  justify-content: space-evenly;
 }
 

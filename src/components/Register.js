@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import { Redirect } from 'react-router-dom';
-import { Button, Form, FormGroup, Label, Input } from "reactstrap";
+import { Redirect } from "react-router-dom";
+import { Button, Form, FormGroup, Input, Collapse } from "reactstrap";
 import Axios from "axios";
 
 import "../App.css";
@@ -17,12 +17,31 @@ class Register extends Component {
     lname: "",
     jobTitle: "",
     tagline: "",
-    isRegistered: false
+    isRegistered: false,
+    collapseCustomer: false,
+    collapseWorker: false
+  };
+
+  toggleCustomer = () => {
+    this.setState({ collapseCustomer: !this.state.collapseCustomer });
+  };
+
+  toggleWorker = () => {
+    this.setState({ collapseWorker: !this.state.collapseWorker });
   };
 
   submitHandler = e => {
     e.preventDefault();
-    const {username, password, accountType, fname, lname, jobTitle, tagline } = this.state
+    const {
+      username,
+      password,
+      accountType,
+      fname,
+      lname,
+      jobTitle,
+      tagline
+    } = this.state;
+
     const user = {
       username: username,
       password: password,
@@ -48,129 +67,113 @@ class Register extends Component {
     //this.props.history.push("/");
   };
 
-  render() {
+  handleInput = async e => {
+    e.preventDefault();
+    this.setState({ [e.target.name]: e.target.value });
+  };
 
+  handleOptionChange = e => {
+    const accntType = e.target.value;
+    if (accntType === "worker") {
+      this.setState({
+        accountType: accntType,
+        isWorker: true
+      });
+    } else {
+      this.setState({
+        accountType: accntType,
+        isWorker: false
+      });
+    }
+  };
+
+  // handleSubmit = e => {
+  //   e.preventDefault();
+  //   const user = {
+  //     username: this.state.username,
+  //     password: this.state.password,
+  //     isWorker: this.state.isWorker
+  //   };
+  //   console.log(user);
+  // };
+
+  render() {
     if (this.state.isRegistered) {
-      return <Redirect to="/login" />
+      return <Redirect to="/login" />;
     }
 
     if (!this.state.isWorker) {
       return (
         <div className="registration-container">
-          <legend className="registration-legend">Registration</legend>
-          <Form className="input-form" onSubmit={this.submitHandler}>
-            <FormGroup>
-              <Label for="username">username</Label>
-              <Input
-                type="text"
-                name="username"
-                id="username"
-                placeholder="username"
-                value={this.state.username}
-                onChange={this.handleInput}
-              />
-            </FormGroup>
-            <FormGroup>
-              <Label for="password">Password</Label>
-              <Input
-                type="password"
-                name="password"
-                id="password"
-                placeholder="******"
-                value={this.state.password}
-                onChange={this.handleInput}
-              />
-            </FormGroup>
-            <FormGroup tag="fieldset">
-              <h5 className="account-type">Account Type</h5>
-              <FormGroup check>
-                <Label check>
-                  <input
-                    type="radio"
-                    name="accountType"
-                    value="worker"
-                    checked={this.state.accountType === "worker"}
-                    onChange={this.handleOptionChange}
-                  />{" "}
-                  Worker
-                </Label>
-              </FormGroup>
-              <FormGroup check>
-                <Label check>
-                  <input
-                    type="radio"
-                    name="accountType"
-                    value="customer"
-                    checked={this.state.accountType === "customer"}
-                    onChange={this.handleOptionChange}
-                  />{" "}
-                  Customer
-                </Label>
-              </FormGroup>
-            </FormGroup>
-            <Button outline type="submit">
-              Register
+          <h3 className="registration-legend">Registration</h3>
+          <div className="register-buttons">
+            <Button
+              outline
+              color="primary"
+              onClick={this.toggleCustomer}
+              style={{ marginBottom: "1rem" }}
+            >
+              Customer
             </Button>
-          </Form>
-        </div>
-      );
-    } else {
-      return (
-        <div className="registration-container">
-          <legend className="registration-legend">Registration</legend>
-          <Form className="input-form" onSubmit={this.submitHandler}>
-            <FormGroup>
-              <Label for="username">username</Label>
-              <Input
-                type="text"
-                name="username"
-                id="username"
-                placeholder="username"
-                value={this.state.username}
-                onChange={this.handleInput}
-              />
-            </FormGroup>
-            <FormGroup>
-              <Label for="password">Password</Label>
-              <Input
-                type="password"
-                name="password"
-                id="password"
-                placeholder="******"
-                value={this.state.password}
-                onChange={this.handleInput}
-              />
-            </FormGroup>
-            <FormGroup tag="fieldset">
-              <h5 className="account-type">Account Type</h5>
-              <FormGroup check>
-                <Label check>
-                  <input
-                    type="radio"
-                    name="accountType"
-                    value="worker"
-                    checked={this.state.accountType === "worker"}
-                    onChange={this.handleOptionChange}
-                  />{" "}
-                  Worker
-                </Label>
-              </FormGroup>
-              <FormGroup check>
-                <Label check>
-                  <input
-                    type="radio"
-                    name="accountType"
-                    value="customer"
-                    checked={this.state.accountType === "customer"}
-                    onChange={this.handleOptionChange}
-                  />{" "}
-                  Customer
-                </Label>
+            <Button
+              outline
+              color="success"
+              onClick={this.toggleWorker}
+              style={{ marginBottom: "1rem" }}
+            >
+              Worker
+            </Button>
+          </div>
+          <Collapse isOpen={this.state.collapseCustomer}>
+            <Form className="input-form" onSubmit={this.submitHandler}>
+              <FormGroup>
+                <Input
+                  type="text"
+                  name="username"
+                  id="username"
+                  placeholder="username"
+                  value={this.state.username}
+                  onChange={this.handleInput}
+                />
               </FormGroup>
               <FormGroup>
-                <h6 className="additional-info">
-                  Please fill out additional information
-                </h6>
+                <Input
+                  type="password"
+                  name="password"
+                  id="password"
+                  placeholder="password"
+                  value={this.state.password}
+                  onChange={this.handleInput}
+                />
+              </FormGroup>
+              <Button outline type="submit">
+                Register
+              </Button>
+            </Form>
+          </Collapse>
+          <Collapse isOpen={this.state.collapseWorker}>
+            <Form className="input-form" onSubmit={this.submitHandler}>
+              <FormGroup>
+                <Input
+                  type="text"
+                  name="username"
+                  id="username"
+                  placeholder="username"
+                  value={this.state.username}
+                  onChange={this.handleInput}
+                />
+              </FormGroup>
+              <FormGroup>
+                <Input
+                  type="password"
+                  name="password"
+                  id="password"
+                  placeholder="password"
+                  value={this.state.password}
+                  onChange={this.handleInput}
+                />
+              </FormGroup>
+              <FormGroup>
                 <Input
                   type="text"
                   name="fname"
@@ -206,48 +209,100 @@ class Register extends Component {
                   onChange={this.handleInput}
                 />
               </FormGroup>
+              <Button outline type="submit">
+                Register
+              </Button>
+            </Form>
+          </Collapse>
+          {/* <FormGroup tag="fieldset">
+              <h5 className="account-type">Account Type</h5>
+              <FormGroup check>
+                <Label check>
+                  <input
+                    type="radio"
+                    name="accountType"
+                    value="worker"
+                    checked={this.state.accountType === "worker"}
+                    onChange={this.handleOptionChange}
+                  />{" "}
+                  Worker
+                </Label>
+              </FormGroup>
+              <FormGroup check>
+                <Label check>
+                  <input
+                    type="radio"
+                    name="accountType"
+                    value="customer"
+                    checked={this.state.accountType === "customer"}
+                    onChange={this.handleOptionChange}
+                  />{" "}
+                  Customer
+                </Label>
+              </FormGroup>
+            </FormGroup> */}
+          {/* </Form>
+        </div>
+      );
+    } else {
+      return (
+        <div className="registration-container">
+          <legend className="registration-legend">Registration</legend>
+          <Form className="input-form" onSubmit={this.submitHandler}>
+            <FormGroup>
+              <Input
+                type="text"
+                name="username"
+                id="username"
+                placeholder="username"
+                value={this.state.username}
+                onChange={this.handleInput}
+              />
             </FormGroup>
-            <Button outline type="submit">
-              Register
-            </Button>
-          </Form>
+            <FormGroup>
+              <Input
+                type="password"
+                name="password"
+                id="password"
+                placeholder="password"
+                value={this.state.password}
+                onChange={this.handleInput}
+              />
+            </FormGroup>
+            <FormGroup tag="fieldset">
+              <h5 className="account-type">Account Type</h5>
+              <FormGroup check>
+                <Label check>
+                  <input
+                    type="radio"
+                    name="accountType"
+                    value="worker"
+                    checked={this.state.accountType === "worker"}
+                    onChange={this.handleOptionChange}
+                  />{" "}
+                  Worker
+                </Label>
+              </FormGroup>
+              <FormGroup check>
+                <Label check>
+                  <input
+                    type="radio"
+                    name="accountType"
+                    value="customer"
+                    checked={this.state.accountType === "customer"}
+                    onChange={this.handleOptionChange}
+                  />{" "}
+                  Customer
+                </Label>
+              </FormGroup>
+              <FormGroup>
+                <h6 className="additional-info">
+                  Please fill out additional information
+                </h6> */}
         </div>
       );
     }
   }
-
-  handleInput = async e => {
-    e.preventDefault();
-    this.setState({ [e.target.name]: e.target.value });
-    // (await this.state.accountType) === "worker"
-    //   ? this.setState({ isWorker: true })
-    //   : this.setState({ isWorker: false });
-  };
-
-  handleOptionChange = e => {
-    const accntType = e.target.value;
-    if (accntType === "worker") {
-      this.setState({
-        accountType: accntType,
-        isWorker: true
-      });
-    } else {
-      this.setState({
-        accountType: accntType,
-        isWorker: false
-      });
-    }
-  };
-
-  handleSubmit = e => {
-    e.preventDefault();
-    const user = {
-      username: this.state.username,
-      password: this.state.password,
-      isWorker: this.state.isWorker
-    };
-    console.log(user);
-  };
 }
 
 export default Register;
