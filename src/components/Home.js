@@ -7,9 +7,9 @@ import Login from "./Login";
 class Home extends Component {
   /* when a user logs in, we will check the accountType field on the JWT to determine what compnent needs to be rendered */
   state = {
-    accountType: "customer",
+    accountType: "worker",
     username: "Brett",
-    id: "",
+    id: "1",
     isReloaded: false
   };
 
@@ -20,18 +20,20 @@ class Home extends Component {
 
   checkForToken(){
     const token = localStorage.getItem('jwt');
+    const options = {
+      headers: {
+        Authorization: token
+      }
+    };
 
     if (token) {
       const decoded = jwt_decode(token);
-      const { exp, accountType, username, id } = decoded;
-      const currentTime = +(Date.now().toString().slice(0,10));
-      if (exp > currentTime){
+      const { accountType, username, id } = decoded;
         this.setState({
           accountType: accountType,
           username: username,
           id: id,
         })
-      }
     }
   }
 
@@ -41,7 +43,6 @@ class Home extends Component {
     } else if (this.state.accountType === "worker") {
       return <WorkerDashboard workerID={this.state.id} />
     } else {
-      this.checkForToken();
       return <Login />;
     }
   }
