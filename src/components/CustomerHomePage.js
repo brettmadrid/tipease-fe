@@ -56,7 +56,8 @@ class CustomerHomePage extends Component {
       ],
       open: false,
       amount: "0.00",
-      id: null
+      id: null,
+      tipSuccess: false
     };
   }
 
@@ -64,7 +65,10 @@ class CustomerHomePage extends Component {
     /* This is where an axios.get would be done to get all of the workers from the database, then set your this.state.workers to the response.data */
     Axios.get("https://tipease-server.herokuapp.com/api/customer")
       .then(response => console.log(response))
-      //.then(response => this.setState(workers: response.data))
+      .then(response => this.setState({
+        workers: response.data,
+        tipSuccess: true
+      }))
       .catch(err => console.log(err));
   }
 
@@ -134,7 +138,7 @@ class CustomerHomePage extends Component {
                   <CardText>{worker.jobTitle}</CardText>
                   <CardText>{worker.tagline}</CardText>
                   {/* Store id on state when the tip button is clicked to open modal */}
-                  <Button color="danger" onClick={() => this.onOpenModal(worker.id)}>Tip</Button>
+                  <Button  color="success" size="lg" type="button" onClick={() => this.onOpenModal(worker.id)} block>Leave Tip</Button>
                 </CardBody>
               </Card>
             );

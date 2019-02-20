@@ -61,14 +61,12 @@
 
 .worker-dashboard {
   width: 500px;
-  margin: 2%;
+  margin: 1% auto;
 }
 
-div.card-body {
+.worker-btns {
   display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
+  justify-content: space-between;
 }
 
 .worker-dashboard-form {
@@ -78,7 +76,7 @@ div.card-body {
 }
 
 .worker-dashboard Button {
-  margin: 4% 0;
+  margin: 4% 0 2%;
 }
 
 .login-buttons {
@@ -94,6 +92,3 @@ div.card-body {
   margin: 10% auto;
 }
 
-.tip-button {
-  margin: 7% auto 0;
-}

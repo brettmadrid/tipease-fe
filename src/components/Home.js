@@ -9,7 +9,7 @@ class Home extends Component {
   state = {
     accountType: "customer",
     username: "Brett",
-    id: "1",
+    id: "",
     isReloaded: false
   };
 
