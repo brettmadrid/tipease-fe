@@ -1,7 +1,7 @@
 import React from "react";
 import { Redirect, Link } from "react-router-dom";
 import Axios from "axios";
-import { Button, Form, FormGroup, Label, Input } from "reactstrap";
+import { Button, Form, FormGroup, Label, Input, NavLink, Nav } from "reactstrap";
 
 import "../App.css";
 
@@ -79,9 +79,12 @@ export default class Login extends React.Component {
               Submit
             </Button>
             <Link to="/register">
-              <Button outline type="button">
+              {/* <Button outline type="button">
                 Register
-              </Button>
+              </Button> */}
+              <Nav>
+                <NavLink href="/register">Don't have an account?</NavLink>
+              </Nav>
             </Link>
           </div>
         </Form>
