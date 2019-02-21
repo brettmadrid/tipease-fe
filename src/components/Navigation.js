@@ -31,9 +31,9 @@ export default class Navigation extends React.Component {
   render() {
     return (
       <div>
-        <Navbar inverse style={{ backgroundColor: "#008C17" }} light expand="md">
+        <Navbar dark style={{ backgroundColor: "#008C17" }} light expand="md">
           <NavbarBrand href="/" style={{ fontSize: "2rem", color: "#30393A" }}>
-            TipEASE
+            TIPEASE
           </NavbarBrand>
           <NavbarToggler className="nav-toggler" onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
