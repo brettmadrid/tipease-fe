@@ -31,8 +31,8 @@ export default class Navigation extends React.Component {
   render() {
     return (
       <div>
-        <Navbar color="inverse" inverse toggleable style={{ backgroundColor: "#008C17" }} light expand="md">
-          <NavbarBrand href="/" style={{ fontSize: "2rem", color: "white" }}>
+        <Navbar inverse style={{ backgroundColor: "#008C17" }} light expand="md">
+          <NavbarBrand href="/" style={{ fontSize: "2rem", color: "#30393A" }}>
             TipEASE
           </NavbarBrand>
           <NavbarToggler className="nav-toggler" onClick={this.toggle} />
@@ -40,7 +40,7 @@ export default class Navigation extends React.Component {
             <Nav className="ml-auto" navbar>
               <NavItem>
                 <NavLink
-                  style={{ color: "white" }}
+                  style={{ color: "#FFAFA" }}
                   tag={RRNavLink}
                   exact
                   to="/"
@@ -51,7 +51,7 @@ export default class Navigation extends React.Component {
               </NavItem>
               <NavItem>
                 <NavLink
-                  style={{ color: "white" }}
+                  style={{ color: "#FFAFA" }}
                   tag={RRNavLink}
                   exact
                   to="/login"
@@ -62,7 +62,7 @@ export default class Navigation extends React.Component {
               </NavItem>
               <NavItem>
                 <NavLink
-                  style={{ color: "white" }}
+                  style={{ color: "#FFAFA" }}
                   tag={RRNavLink}
                   exact
                   to="/register"
@@ -73,7 +73,7 @@ export default class Navigation extends React.Component {
               </NavItem>
               <NavItem>
                 <NavLink
-                  style={{ color: "white" }}
+                  style={{ color: "#FFAFA" }}
                   onClick={this.logout}
                   tag={RRNavLink}
                   exact
