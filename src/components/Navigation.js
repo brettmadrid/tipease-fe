@@ -1,5 +1,5 @@
 import React from "react";
-import { NavLink as RRNavLink, Redirect } from "react-router-dom";
+import { NavLink as RRNavLink } from "react-router-dom";
 import {
   Collapse,
   Navbar,
@@ -13,7 +13,6 @@ import {
 export default class Navigation extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
       isOpen: false
     };
@@ -27,21 +26,21 @@ export default class Navigation extends React.Component {
 
   logout = () => {
     localStorage.removeItem("token");
-    // return <Redirect to="/login" />
   };
 
   render() {
     return (
       <div>
-        <Navbar style={{ backgroundColor: "#63DA00" }} light expand="md">
-          <NavbarBrand href="/" style={{ fontSize: "2rem" }}>
+        <Navbar color="inverse" inverse toggleable style={{ backgroundColor: "#008C17" }} light expand="md">
+          <NavbarBrand href="/" style={{ fontSize: "2rem", color: "white" }}>
             TipEASE
           </NavbarBrand>
-          <NavbarToggler onClick={this.toggle} />
+          <NavbarToggler className="nav-toggler" onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
               <NavItem>
                 <NavLink
+                  style={{ color: "white" }}
                   tag={RRNavLink}
                   exact
                   to="/"
@@ -52,6 +51,7 @@ export default class Navigation extends React.Component {
               </NavItem>
               <NavItem>
                 <NavLink
+                  style={{ color: "white" }}
                   tag={RRNavLink}
                   exact
                   to="/login"
@@ -62,6 +62,7 @@ export default class Navigation extends React.Component {
               </NavItem>
               <NavItem>
                 <NavLink
+                  style={{ color: "white" }}
                   tag={RRNavLink}
                   exact
                   to="/register"
@@ -72,6 +73,7 @@ export default class Navigation extends React.Component {
               </NavItem>
               <NavItem>
                 <NavLink
+                  style={{ color: "white" }}
                   onClick={this.logout}
                   tag={RRNavLink}
                   exact

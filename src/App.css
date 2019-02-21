@@ -1,13 +1,17 @@
+.nav-toggler {
+  color: white;
+}
+
 .registration-container {
   width: 500px;
-  border: 1px solid #63DA00;
+  border: 1px solid #008C17;
   border-radius: 10px;
   margin: 5% auto;
 }
 
 .login-container {
   width: 500px;
-  border: 1px solid #63DA00;
+  border: 1px solid #008C17;
   border-radius: 10px;
   margin: 5% auto;
 }
@@ -71,7 +75,7 @@
 }
 
 .worker-dashboard-form {
-  border: 1px solid #63DA00;
+  border: 1px solid #008C17;
   border-radius: 5px;
   padding: 2%;
 }

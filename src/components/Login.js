@@ -25,22 +25,15 @@ export default class Login extends React.Component {
       .then(response => {
         localStorage.setItem("jwt", response.data.token);
         this.setState({ isLoggedIn: true });
-        // window.location.reload();
       })
       .catch(error => {
         console.log("Axios Error Msg: ", error);
       });
-    // store username on localStorage so user doesn't have to re-log back in
-    //localStorage.setItem("user", this.state.username);
-    // Next line loads our Home component set up by Router as "/"
   };
 
   handleInput = async e => {
     e.preventDefault();
     this.setState({ [e.target.name]: e.target.value });
-    // (await this.state.accountType) === "worker"
-    //   ? this.setState({ isWorker: true })
-    //   : this.setState({ isWorker: false });
   };
 
   render() {
@@ -50,7 +43,7 @@ export default class Login extends React.Component {
 
     return (
       <div className="login-container">
-        <legend className="login-legend">Login</legend>
+        <legend className="login-legend">Please Login</legend>
         <Form className="input-form" onSubmit={this.submitHandler}>
           <FormGroup>
             <Input
