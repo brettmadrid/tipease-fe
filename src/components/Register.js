@@ -21,6 +21,7 @@ class Register extends Component {
   };
 
   toggleCustomer = () => {
+    // this.setState({ collapseCustomer: !this.state.collapseCustomer });
     this.setState({
       collapseCustomer: !this.state.collapseCustomer,
       accountType: "customer",
@@ -29,10 +30,11 @@ class Register extends Component {
   };
 
   toggleWorker = () => {
+    //this.setState({ collapseWorker: !this.state.collapseWorker });
     this.setState({
       collapseWorker: !this.state.collapseWorker,
-      accountType: "worker",
-      isWorker: true
+      accountType: "worker"
+      //isWorker: true
     });
   };
 
@@ -80,6 +82,26 @@ class Register extends Component {
     }
   };
 
+  handleInput = async e => {
+    e.preventDefault();
+    this.setState({ [e.target.name]: e.target.value });
+  };
+
+  handleOptionChange = e => {
+    const accntType = e.target.value;
+    if (accntType === "worker") {
+      this.setState({
+        accountType: accntType,
+        isWorker: true
+      });
+    } else {
+      this.setState({
+        accountType: accntType,
+        isWorker: false
+      });
+    }
+  };
+
   render() {
     if (this.state.isRegistered) {
       return <Redirect to="/login" />;
@@ -88,16 +110,26 @@ class Register extends Component {
     if (!this.state.isWorker) {
       return (
         <div className="registration-container">
-          <legend className="registration-legend">Registration</legend>
+          <h3 className="registration-legend">Registration</h3>
           <div className="register-buttons">
-            <Button outline color="primary" onClick={this.toggleCustomer}>
+            <Button
+              outline
+              color="primary"
+              onClick={this.toggleCustomer}
+              style={{ marginBottom: "1rem" }}
+            >
               Customer
             </Button>
-            <Button outline color="success" onClick={this.toggleWorker}>
+            <Button
+              outline
+              color="success"
+              onClick={this.toggleWorker}
+              style={{ marginBottom: "1rem" }}
+            >
               Worker
             </Button>
           </div>
-          <Collapse isOpen={this.state.collapseCustomer} >
+          <Collapse isOpen={this.state.collapseCustomer}>
             <Form className="input-form" onSubmit={this.submitHandler}>
               <FormGroup>
                 <Input
@@ -121,103 +153,76 @@ class Register extends Component {
               </FormGroup>
               <Button outline type="submit">
                 Register
-            </Button>
+              </Button>
+            </Form>
+          </Collapse>
+          <Collapse isOpen={this.state.collapseWorker}>
+            <Form className="input-form" onSubmit={this.submitHandler}>
+              <FormGroup>
+                <Input
+                  type="text"
+                  name="username"
+                  id="username"
+                  placeholder="username"
+                  value={this.state.username}
+                  onChange={this.handleInput}
+                />
+              </FormGroup>
+              <FormGroup>
+                <Input
+                  type="password"
+                  name="password"
+                  id="password"
+                  placeholder="password"
+                  value={this.state.password}
+                  onChange={this.handleInput}
+                />
+              </FormGroup>
+              <FormGroup>
+                <Input
+                  type="text"
+                  name="fname"
+                  placeholder="first name"
+                  value={this.state.fname}
+                  onChange={this.handleInput}
+                />
+              </FormGroup>
+              <FormGroup>
+                <Input
+                  type="text"
+                  name="lname"
+                  placeholder="last name"
+                  value={this.state.lname}
+                  onChange={this.handleInput}
+                />
+              </FormGroup>
+              <FormGroup>
+                <Input
+                  type="text"
+                  name="jobTitle"
+                  placeholder="job title"
+                  value={this.state.jobTitle}
+                  onChange={this.handleInput}
+                />
+              </FormGroup>
+              <FormGroup>
+                <Input
+                  type="text"
+                  name="tagline"
+                  placeholder="tagline"
+                  value={this.state.tagline}
+                  onChange={this.handleInput}
+                />
+              </FormGroup>
+              <Button outline type="submit">
+                Register
+              </Button>
             </Form>
           </Collapse>
         </div>
       );
-    } else {
-      return (
-        <div className="registration-container">
-          <legend className="registration-legend">Registration</legend>
-          <Form className="input-form" onSubmit={this.submitHandler}>
-            <FormGroup>
-              <Input
-                type="text"
-                name="username"
-                id="username"
-                placeholder="username"
-                value={this.state.username}
-                onChange={this.handleInput}
-              />
-            </FormGroup>
-            <FormGroup>
-              <Input
-                type="password"
-                name="password"
-                id="password"
-                placeholder="password"
-                value={this.state.password}
-                onChange={this.handleInput}
-              />
-            </FormGroup>
-            <FormGroup>
-              <Input
-                type="text"
-                name="fname"
-                placeholder="first name"
-                value={this.state.fname}
-                onChange={this.handleInput}
-              />
-            </FormGroup>
-            <FormGroup>
-              <Input
-                type="text"
-                name="lname"
-                placeholder="last name"
-                value={this.state.lname}
-                onChange={this.handleInput}
-              />
-            </FormGroup>
-            <FormGroup>
-              <Input
-                type="text"
-                name="jobTitle"
-                placeholder="job title"
-                value={this.state.jobTitle}
-                onChange={this.handleInput}
-              />
-            </FormGroup>
-            <FormGroup>
-              <Input
-                type="text"
-                name="tagline"
-                placeholder="tagline"
-                value={this.state.tagline}
-                onChange={this.handleInput}
-              />
-            </FormGroup>
-          <Button outline type="submit">
-            Register
-            </Button>
-          </Form >
-        </div >
-      );
     }
   }
-
-  handleInput = async e => {
-    e.preventDefault();
-    this.setState({ [e.target.name]: e.target.value });
-    // (await this.state.accountType) === "worker"
-    //   ? this.setState({ isWorker: true })
-    //   : this.setState({ isWorker: false });
-  };
-
-  handleOptionChange = e => {
-    const accntType = e.target.value;
-    if (accntType === "worker") {
-      this.setState({
-        accountType: accntType,
-        isWorker: true
-      });
-    } else {
-      this.setState({
-        accountType: accntType,
-        isWorker: false
-      });
-    }
-  };
 }
 
 export default Register;
