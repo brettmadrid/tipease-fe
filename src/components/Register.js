@@ -1,24 +1,30 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
-import { Button, Form, FormGroup, Label, Input, Collapse } from "reactstrap";
+import { Button, Form, FormGroup, Input, Collapse } from "reactstrap";
 import Axios from "axios";
 
 import "../App.css";
 
 class Register extends Component {
-  state = {
-    username: "",
-    password: "",
-    accountType: "",
-    isWorker: false,
-    fname: "",
-    lname: "",
-    jobTitle: "",
-    tagline: "",
-    isRegistered: false,
-    collapseCustomer: false,
-    collapseWorker: false
-  };
+  constructor() {
+    super();
+    this.state = {
+      username: "",
+      password: "",
+      password2: "",
+      passwordMessage: "",
+      accountType: "",
+      isWorker: false,
+      fname: "",
+      lname: "",
+      jobTitle: "",
+      tagline: "",
+      isRegistered: false,
+      collapseCustomer: false,
+      collapseWorker: false,
+      invalidInput: false
+    };
+  }
 
   toggleCustomer = () => {
     // this.setState({ collapseCustomer: !this.state.collapseCustomer });
@@ -40,15 +46,20 @@ class Register extends Component {
 
   submitHandler = e => {
     e.preventDefault();
+
     const {
       username,
       password,
+      password2,
+      passwordMessage,
       accountType,
       fname,
       lname,
       jobTitle,
-      tagline
+      tagline,
+      invalidInput,
     } = this.state;
+
     const user = {
       username,
       password,
@@ -59,26 +70,43 @@ class Register extends Component {
       tagline
     };
 
-    if (accountType === "customer") {
-      Axios.post("https://tipease-server.herokuapp.com/api/register", {
-        username,
-        password,
-        accountType
+    if (password !== password2) {
+      this.setState({
+        passwordMessage: "Passwords do not match!",
+        invalidInput: true
       })
-        .then(response => {
-          this.setState({ isRegistered: true });
-        })
-        .catch(error => {
-          console.log("Axios Error Msg: ", error);
-        });
     } else {
-      Axios.post("https://tipease-server.herokuapp.com/api/register", user)
-        .then(response => {
-          this.setState({ isRegistered: true });
+      this.setState({
+        passwordMessage: "Passwords match!",
+        invalidInput: false
+      });
+    }
+
+    
+
+    if (!invalidInput) {
+      console.log("right after if: ", invalidInput, passwordMessage)
+      if (accountType === "customer") {
+        Axios.post("https://tipease-server.herokuapp.com/api/register", {
+          username,
+          password,
+          accountType
         })
-        .catch(error => {
-          console.log("Axios Error Msg: ", error);
-        });
+          .then(response => {
+            this.setState({ isRegistered: true });
+          })
+          .catch(error => {
+            console.log("Axios Error Msg: ", error);
+          });
+      } else {
+        Axios.post("https://tipease-server.herokuapp.com/api/register", user)
+          .then(response => {
+            this.setState({ isRegistered: true });
+          })
+          .catch(error => {
+            console.log("Axios Error Msg: ", error);
+          });
+      }
     }
   };
 
@@ -150,6 +178,18 @@ class Register extends Component {
                   value={this.state.password}
                   onChange={this.handleInput}
                 />
+                {this.state.passwordMessage ? <span>{this.state.passwordMessage}</span> : null}<br />
+              </FormGroup>
+              <FormGroup>
+                <Input
+                  type="password"
+                  name="password2"
+                  id="password2"
+                  placeholder="repeat password"
+                  value={this.state.password2}
+                  onChange={this.handleInput}
+                />
+                {this.state.passwordMessage ? <span>{this.state.passwordMessage}</span> : null}<br />
               </FormGroup>
               <Button outline type="submit">
                 Register
@@ -175,6 +215,16 @@ class Register extends Component {
                   id="password"
                   placeholder="password"
                   value={this.state.password}
+                  onChange={this.handleInput}
+                />
+              </FormGroup>
+              <FormGroup>
+                <Input
+                  type="password"
+                  name="password2"
+                  id="password2"
+                  placeholder="repeat password"
+                  value={this.state.password2}
                   onChange={this.handleInput}
                 />
               </FormGroup>

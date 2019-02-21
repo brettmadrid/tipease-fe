@@ -1,7 +1,7 @@
 import React from "react";
 import { Redirect, Link } from "react-router-dom";
 import Axios from "axios";
-import { Button, Form, FormGroup, Label, Input, NavLink, Nav } from "reactstrap";
+import { Button, Form, FormGroup, Input } from "reactstrap";
 
 import "../App.css";
 
