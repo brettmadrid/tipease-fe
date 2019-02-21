@@ -1,7 +1,9 @@
 import React, { Component } from "react";
+import { Redirect } from 'react-router-dom';
 import { Button, Form, FormGroup, Label, Input, FormText } from "reactstrap";
+import Axios from "axios";
 
-import '../App.css';
+import "../App.css";
 // import { Redirect } from "react-router";
 // import axios from "axios";
 
@@ -18,12 +20,45 @@ class Register extends Component {
     isRegistered: false
   };
 
+  submitHandler = e => {
+    e.preventDefault();
+    const {username, password, accountType, fname, lname, jobTitle, tagline } = this.state
+    const user = {
+      username: username,
+      password: password,
+      accountType: accountType,
+      fname: fname,
+      lname: lname,
+      jobTitle: jobTitle,
+      tagline: tagline
+    };
+
+    Axios.post("https://tipease-server.herokuapp.com/api/register", user)
+      .then(response => { 
+        this.setState({ isRegistered: true });
+        //this.props.history.push("/");
+        // <Redirect to="/" />
+      })
+      .catch(error => {
+        console.log("Axios Error Msg: ", error);
+      });
+    // store username on localStorage so user doesn't have to re-log back in
+    // Next line loads our Home component set up by Router as "/"
+    // Next line loads our Home component set up by Router as "/"
+    //this.props.history.push("/");
+  };
+
   render() {
+
+    if (this.state.isRegistered) {
+      return <Redirect to="/login" />
+    }
+
     if (!this.state.isWorker) {
       return (
         <div className="registration-container">
           <legend className="registration-legend">Registration</legend>
-          <Form className="input-form" onSubmit={this.handleSubmit}>
+          <Form className="input-form" onSubmit={this.submitHandler}>
             <FormGroup>
               <Label for="username">username</Label>
               <Input
@@ -73,7 +108,9 @@ class Register extends Component {
                 </Label>
               </FormGroup>
             </FormGroup>
-            <Button>Register</Button>
+            <Button outline type="submit">
+              Register
+            </Button>
           </Form>
         </div>
       );
@@ -81,7 +118,7 @@ class Register extends Component {
       return (
         <div className="registration-container">
           <legend className="registration-legend">Registration</legend>
-          <Form className="input-form" onSubmit={this.handleSubmit}>
+          <Form className="input-form" onSubmit={this.submitHandler}>
             <FormGroup>
               <Label for="username">username</Label>
               <Input
@@ -131,7 +168,9 @@ class Register extends Component {
                 </Label>
               </FormGroup>
               <FormGroup>
-                <h6 className="additional-info">Please fill out additional information</h6>
+                <h6 className="additional-info">
+                  Please fill out additional information
+                </h6>
                 <Input
                   type="text"
                   name="fname"
@@ -168,7 +207,9 @@ class Register extends Component {
                 />
               </FormGroup>
             </FormGroup>
-            <Button>Submit</Button>
+            <Button outline type="submit">
+              Register
+            </Button>
           </Form>
         </div>
       );

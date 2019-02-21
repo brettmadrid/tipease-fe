@@ -38,8 +38,16 @@ export default class Navigation extends React.Component {
                   exact
                   to="/"
                   activeClassName="activeNavButton"
-                >
-                  Home
+                >Home
+                </NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink
+                  tag={RRNavLink}
+                  exact
+                  to="/login"
+                  activeClassName="activeNavButton"
+                >Login
                 </NavLink>
               </NavItem>
               <NavItem>
@@ -48,19 +56,9 @@ export default class Navigation extends React.Component {
                   exact
                   to="/register"
                   activeClassName="activeNavButton"
-                >
-                  Register
+                >Register
                 </NavLink>
               </NavItem>
-              {/* <NavItem>
-                <NavLink
-                  tag={RRNavLink}
-                  exact
-                  to="/logout"
-                  activeClassName="activeNavButton"
-                >Logout
-                </NavLink>
-              </NavItem> */}
             </Nav>
           </Collapse>
         </Navbar>
