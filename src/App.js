@@ -29,7 +29,7 @@ class App extends Component {
         <Navigation />
         <Route exact path="/" render={props => <Home {...props} />} />
         <Route exact path="/login" render={props => <Login {...props} />} />
-        <Route exact path="/register" component={Register} />
+        <Route exact path="/register" render={props => <Register {...props} />} />
         {localStorage.getItem("jwt") ? (
           <Route exact path="/dashboard" component={WorkerDashboard} />
         ) : null}

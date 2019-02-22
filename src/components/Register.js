@@ -1,18 +1,18 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 import { Button, Form, FormGroup, Input, Collapse } from "reactstrap";
+import { Context, Error, Hint, Rules } from 'react-form-validation';
 import Axios from "axios";
 
 import "../App.css";
 
 class Register extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       username: "",
       password: "",
       password2: "",
-      passwordMessage: "",
       accountType: "",
       isWorker: false,
       fname: "",
@@ -22,7 +22,7 @@ class Register extends Component {
       isRegistered: false,
       collapseCustomer: false,
       collapseWorker: false,
-      invalidInput: false
+      match: false
     };
   }
 
@@ -30,6 +30,7 @@ class Register extends Component {
     // this.setState({ collapseCustomer: !this.state.collapseCustomer });
     this.setState({
       collapseCustomer: !this.state.collapseCustomer,
+      collapseWorker: false,
       accountType: "customer",
       isWorker: false
     });
@@ -39,8 +40,8 @@ class Register extends Component {
     //this.setState({ collapseWorker: !this.state.collapseWorker });
     this.setState({
       collapseWorker: !this.state.collapseWorker,
+      collapseCustomer: false,
       accountType: "worker"
-      //isWorker: true
     });
   };
 
@@ -51,13 +52,11 @@ class Register extends Component {
       username,
       password,
       password2,
-      passwordMessage,
       accountType,
       fname,
       lname,
       jobTitle,
-      tagline,
-      invalidInput,
+      tagline
     } = this.state;
 
     const user = {
@@ -70,22 +69,6 @@ class Register extends Component {
       tagline
     };
 
-    if (password !== password2) {
-      this.setState({
-        passwordMessage: "Passwords do not match!",
-        invalidInput: true
-      })
-    } else {
-      this.setState({
-        passwordMessage: "Passwords match!",
-        invalidInput: false
-      });
-    }
-
-    
-
-    if (!invalidInput) {
-      console.log("right after if: ", invalidInput, passwordMessage)
       if (accountType === "customer") {
         Axios.post("https://tipease-server.herokuapp.com/api/register", {
           username,
@@ -107,7 +90,6 @@ class Register extends Component {
             console.log("Axios Error Msg: ", error);
           });
       }
-    }
   };
 
   handleInput = async e => {
@@ -158,6 +140,7 @@ class Register extends Component {
             </Button>
           </div>
           <Collapse isOpen={this.state.collapseCustomer}>
+          <h4 style={{ textAlign: "center", color: "#555" }}>Customer</h4>
             <Form className="input-form" onSubmit={this.submitHandler}>
               <FormGroup>
                 <Input
@@ -178,18 +161,17 @@ class Register extends Component {
                   value={this.state.password}
                   onChange={this.handleInput}
                 />
-                {this.state.passwordMessage ? <span>{this.state.passwordMessage}</span> : null}<br />
+                {/* {this.state.passwordMessage ? <span>{this.state.passwordMessage}</span> : null}<br /> */}
               </FormGroup>
               <FormGroup>
                 <Input
                   type="password"
                   name="password2"
                   id="password2"
-                  placeholder="repeat password"
+                  placeholder="confirm password"
                   value={this.state.password2}
                   onChange={this.handleInput}
                 />
-                {this.state.passwordMessage ? <span>{this.state.passwordMessage}</span> : null}<br />
               </FormGroup>
               <Button outline type="submit">
                 Register
@@ -197,6 +179,7 @@ class Register extends Component {
             </Form>
           </Collapse>
           <Collapse isOpen={this.state.collapseWorker}>
+          <h4 style={{ textAlign: "center", color: "#555" }}>Worker</h4>
             <Form className="input-form" onSubmit={this.submitHandler}>
               <FormGroup>
                 <Input
