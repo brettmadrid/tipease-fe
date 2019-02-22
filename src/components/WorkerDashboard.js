@@ -1,53 +1,116 @@
 import React, { Component } from "react";
 import Axios from "axios";
-import { Form, Input, FormText, Button, FormGroup, Label } from "reactstrap";
+import jwt_decode from "jwt-decode";
+import { Form, Input, Button, FormGroup, Label } from "reactstrap";
 
 import "../App.css";
 
 class WorkerDashboard extends Component {
   constructor(props) {
     super(props);
-    this.state = []
+    this.state = {
+      id: "",
+      photo: "",
+      fname: "",
+      lname: "",
+      jobTitle: "",
+      tagline: "",
+      totalTips: null
+    };
   }
 
   componentDidMount() {
-    const id = this.props.workerID;
+    this.refresh();
+  }
+
+  refresh = () => {
+    const token = localStorage.getItem("jwt");
+    const options = {
+      headers: {
+        Authorization: token
+      }
+    };
+    const { id } = jwt_decode(token);
     /* This is where an axios.get would be done to get worker by id */
-    Axios.get(`https://tipease-server.herokuapp.com/api/worker/${id}`)
-      .then(response => this.setState(response.data[0]))
+    Axios.get(`https://tipease-server.herokuapp.com/api/worker/${id}`, options)
+      .then(response => {
+        const {
+          id,
+          photo,
+          fname,
+          lname,
+          jobTitle,
+          tagline,
+          totalTips
+        } = response.data[0];
+        this.setState({
+          id,
+          photo,
+          fname,
+          lname,
+          jobTitle,
+          tagline,
+          totalTips
+        });
+      })
+      .catch(err => console.log("Dashboard error:", err));
+  };
+
+  deleteAccount = id => {
+    Axios.delete(`https://tipease-server.herokuapp.com/api/worker/delete/${id}`)
+      .then(response => console.log(response))
       .catch(err => console.log(err));
-  }
+  };
 
-  deleteAccount = (e, id) => {
-    Axios.delete(`https://tipease-server.herokuapp.com/api/worker/${id}`)
-    .then(response => console.log(response))
-    .catch(err => console.log(err))
-  }
-
-  updateAccount = user => {
-    
-    // Axios.put(`https://tipease-server.herokuapp.com/api/worker/${id}`, user)
-    //   .then(response => { 
-    //     this.refresh();
-    //   })
-    //   .catch(error => {
-    //     console.log(error);
-    //   });
+  updateAccount = e => {
+    e.preventDefault();
+    const token = localStorage.getItem("jwt");
+    const options = {
+      headers: {
+        Authorization: token
+      }
+    };
+    const {
+      id,
+      photo,
+      fname,
+      lname,
+      jobTitle,
+      tagline,
+      totalTips
+    } = this.state;
+    const user = {
+      id,
+      photo,
+      fname,
+      lname,
+      jobTitle,
+      tagline,
+      totalTips
+    };
+    console.log(id, user);
+    Axios.put(
+      `https://tipease-server.herokuapp.com/api/worker/update/${id}`,
+      user,
+      options
+    )
+      .then(response => {
+        this.refresh();
+      })
+      .catch(error => {
+        console.log(error);
+      });
   };
 
   handleInput = async e => {
     e.preventDefault();
     this.setState({ [e.target.name]: e.target.value });
-    // (await this.state.accountType) === "worker"
-    //   ? this.setState({ isWorker: true })
-    //   : this.setState({ isWorker: false });
   };
 
   fileSelectedHandler = async e => {
     e.preventDefault();
     console.log(e.target.files[0]);
-  }
-
+  };
 
   render() {
     const { photo, fname, lname, jobTitle, tagline, totalTips } = this.state;
@@ -68,7 +131,7 @@ class WorkerDashboard extends Component {
             />
           </FormGroup>
           <FormGroup>
-          <Label for="lname-input">Last Name</Label>
+            <Label for="lname-input">Last Name</Label>
             <Input
               type="text"
               id="lname-input"
@@ -79,7 +142,7 @@ class WorkerDashboard extends Component {
             />
           </FormGroup>
           <FormGroup>
-          <Label for="jobTitle-input">Job Title</Label>
+            <Label for="jobTitle-input">Job Title</Label>
             <Input
               type="text"
               id="jobTitle-input"
@@ -90,7 +153,7 @@ class WorkerDashboard extends Component {
             />
           </FormGroup>
           <FormGroup>
-          <Label for="tagline-input">Tagline</Label>
+            <Label for="tagline-input">Tagline</Label>
             <Input
               type="text"
               id="tagline-input"
@@ -105,8 +168,18 @@ class WorkerDashboard extends Component {
             <Input type="file" onChange={this.fileSelectedHandler} />
           </FormGroup>
           <h3>Total Tips Recieved: ${totalTips}</h3>
-          <Button outline type="submit">Update Information</Button>
-          <Button outline type="button" onClick={() => this.deleteAccount(this.props.workerID) }>Delete Profile</Button>
+          <div className="worker-btns">
+            <Button outline type="submit">
+              Update Information
+            </Button>
+            <Button
+              outline
+              type="button"
+              onClick={() => this.deleteAccount(this.props.workerID)}
+            >
+              Delete Profile
+            </Button>
+          </div>
         </Form>
       </div>
     );

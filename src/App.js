@@ -6,37 +6,39 @@ import Home from "./components/Home";
 import Register from "./components/Register";
 import Login from "./components/Login";
 import WorkerDashboard from './components/WorkerDashboard';
+import CustomerHomePage from "./components/CustomerHomePage";
 
 class App extends Component {
   constructor() {
     super();
     this.state = {
-      validated: false
+      isLoading: true
     };
   }
 
   componentDidMount() {
-    if (!localStorage.getItem("user")) {
-      this.setState({ validated: false });
-    } else {
-      this.setState({ validated: true });
-    }
+    console.log("App.js - inside ComponentDidMount");
+    // console.log(localStorage.getItem('jwt'))
+    this.setState({ isLoading: false })
   }
 
   render() {
+    console.log("App.js - inside render");
+    if (this.state.isLoading) {
+      return <div>Loading...</div>;
+    }
     return (
       <div className="App">
         <Navigation />
-        {/* {localStorage.getItem("jwt") ? ( */}
-          <Route exact path="/" render={props => <Home {...props} /> } />
-        {/* //) : ( */}
-          <Route exact path="/login" render={props => <Login {...props} /> } />
-        {/* //)} */}
-
+        <Route exact path="/" render={props => <Home {...props} />} />
+        <Route exact path="/login" render={props => <Login {...props} />} />
         <Route exact path="/register" component={Register} />
-
-        <Route exact path="/dashboard" component={WorkerDashboard} />
-
+        {localStorage.getItem("jwt") ? (
+          <Route exact path="/dashboard" component={WorkerDashboard} />
+        ) : null}
+        {localStorage.getItem("jwt") ? (
+          <Route path="/customer" component={CustomerHomePage} />
+        ) : null}
       </div>
     );
   }

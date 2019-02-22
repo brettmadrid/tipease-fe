@@ -1,13 +1,17 @@
+.nav-toggler {
+  color: white;
+}
+
 .registration-container {
   width: 500px;
-  border: 1px solid #A26CCC;
+  border: 1px solid #008C17;
   border-radius: 10px;
   margin: 5% auto;
 }
 
 .login-container {
   width: 500px;
-  border: 1px solid #A26CCC;
+  border: 1px solid #008C17;
   border-radius: 10px;
   margin: 5% auto;
 }
@@ -21,7 +25,8 @@
 }
 
 .registration-legend {
-  margin: 2%;
+  width: 150px;
+  margin: 2% auto 5%;
 }
 
 .login-legend {
@@ -61,22 +66,39 @@
 
 .worker-dashboard {
   width: 500px;
-  margin: 2%;
+  margin: 1% auto;
 }
 
-div.card-body {
+.worker-btns {
   display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
+  justify-content: space-between;
 }
 
 .worker-dashboard-form {
-  border: 1px solid #A26CCC;
+  border: 1px solid #008C17;
   border-radius: 5px;
   padding: 2%;
 }
 
 .worker-dashboard Button {
-  margin: 4% 0;
+  margin: 4% 0 2%;
 }
+
+.login-buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.tip-amount-text {
+  margin: 10% auto;
+}
+
+.tip-input-field {
+  margin: 10% auto;
+}
+
+.register-buttons {
+  display: flex;
+  justify-content: space-evenly;
+}
+

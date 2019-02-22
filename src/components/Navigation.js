@@ -13,50 +13,74 @@ import {
 export default class Navigation extends React.Component {
   constructor(props) {
     super(props);
-
-    this.toggle = this.toggle.bind(this);
     this.state = {
       isOpen: false
     };
   }
-  toggle() {
+
+  toggle = () => {
     this.setState({
       isOpen: !this.state.isOpen
     });
-  }
+  };
+
+  logout = () => {
+    localStorage.removeItem("token");
+  };
+
   render() {
     return (
       <div>
-        <Navbar style={{ backgroundColor: "#A26CCC" }} light expand="md">
-          <NavbarBrand href="/" style={{ fontSize: "2rem" }}>TipEASE</NavbarBrand>
-          <NavbarToggler onClick={this.toggle} />
+        <Navbar inverse style={{ backgroundColor: "#008C17" }} light expand="md">
+          <NavbarBrand href="/" style={{ fontSize: "2rem", color: "#30393A" }}>
+            TipEASE
+          </NavbarBrand>
+          <NavbarToggler className="nav-toggler" onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
               <NavItem>
                 <NavLink
+                  style={{ color: "#FFAFA" }}
                   tag={RRNavLink}
                   exact
                   to="/"
                   activeClassName="activeNavButton"
-                >Home
+                >
+                  Home
                 </NavLink>
               </NavItem>
               <NavItem>
                 <NavLink
+                  style={{ color: "#FFAFA" }}
                   tag={RRNavLink}
                   exact
                   to="/login"
                   activeClassName="activeNavButton"
-                >Login
+                >
+                  Login
                 </NavLink>
               </NavItem>
               <NavItem>
                 <NavLink
+                  style={{ color: "#FFAFA" }}
                   tag={RRNavLink}
                   exact
                   to="/register"
                   activeClassName="activeNavButton"
-                >Register
+                >
+                  Register
+                </NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink
+                  style={{ color: "#FFAFA" }}
+                  onClick={this.logout}
+                  tag={RRNavLink}
+                  exact
+                  to="/login"
+                  activeClassName="activeNavButton"
+                >
+                  Log Out
                 </NavLink>
               </NavItem>
             </Nav>
