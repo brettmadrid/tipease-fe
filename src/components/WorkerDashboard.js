@@ -46,7 +46,7 @@ class WorkerDashboard extends Component {
         } = response.data[0];
         this.setState({
           id,
-          photo,
+          photo: photo || '',
           fname,
           lname,
           jobTitle,
