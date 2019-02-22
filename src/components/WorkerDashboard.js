@@ -15,7 +15,8 @@ class WorkerDashboard extends Component {
       lname: "",
       jobTitle: "",
       tagline: "",
-      totalTips: null
+      totalTips: null,
+      selectedFile: null
     };
   }
 
@@ -107,17 +108,52 @@ class WorkerDashboard extends Component {
     this.setState({ [e.target.name]: e.target.value });
   };
 
-  fileSelectedHandler = async e => {
-    e.preventDefault();
-    console.log(e.target.files[0]);
+  fileSelectedHandler = e => {
+    const files = e.target.files;
+    this.setState({ selectedFile: files[0] });
+  };
+
+  uploadPhoto = () => {
+    const token = localStorage.getItem("jwt");
+    const options = {
+      headers: {
+        Authorization: token
+      }
+    };
+    const fd = new FormData();
+
+    fd.append("profilePic", this.state.selectedFile);
+  
+    const { id } = this.state;
+
+    Axios.post(`https://tipease-server.herokuapp.com/upload/${id}`, fd, options)
+      .then(response => {
+        console.log("axios response", response);
+      })
+      .catch(err => {
+        console.log("Upload error");
+      });
   };
 
   render() {
     const { photo, fname, lname, jobTitle, tagline, totalTips } = this.state;
+    const URL = "https://tipease-server.herokuapp.com";
+    const photoURL = photo.slice(6);
     return (
       <div className="worker-dashboard">
-        <h3>Service Worker Update Form</h3>
-        <img src={photo} alt="a pic" />
+        <h3 style={{ textAlign: "center" }}>
+          Welcome to your dashboard, {fname}!
+        </h3>
+        <img
+            src={`${URL}${photoURL}`}
+            style={{
+              display: "block",
+              margin: "0 auto",
+              borderRadius: "50%",
+              width: "50%"
+            }}
+            alt="a pic"
+          />
         <Form className="worker-dashboard-form" onSubmit={this.updateAccount}>
           <FormGroup>
             <Label for="fname-input">First Name</Label>
@@ -164,10 +200,12 @@ class WorkerDashboard extends Component {
             />
           </FormGroup>
           <FormGroup>
-            <Label for="photo-input">Upload Image file</Label>
-            <Input type="file" onChange={this.fileSelectedHandler} />
+            <Form encType="multipart/form-data" onSubmit={this.uploadPhoto}>
+              <input type="file" onChange={e => this.fileSelectedHandler(e)} />
+              <Button type="submit">Upload Photo</Button>
+            </Form>
           </FormGroup>
-          <h3>Total Tips Recieved: ${totalTips}</h3>
+          <h3>Total Tips Recieved: ${totalTips || 0}</h3>
           <div className="worker-btns">
             <Button outline type="submit">
               Update Information

@@ -106,6 +106,7 @@ class CustomerHomePage extends Component {
 
   render() {
     const { open, tip } = this.state;
+    const URL = "https://tipease-server.herokuapp.com";
     return (
       <>
         <legend className="welcome-tip">
@@ -114,6 +115,8 @@ class CustomerHomePage extends Component {
         </legend>
         <div className="card-container">
           {this.state.workers.map(worker => {
+            const {photo} = worker;
+            const photoURL = photo.slice(6)
             return (
               <Card className="card" key={worker.id}>
                 <CardImg
@@ -121,7 +124,7 @@ class CustomerHomePage extends Component {
                   className="card-img"
                   top
                   width="100%"
-                  src={worker.photo}
+                  src={`${URL}${photoURL}`}
                   alt="Card image cap"
                 />
                 <CardBody>
