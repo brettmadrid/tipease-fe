@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Axios from "axios";
 import jwt_decode from "jwt-decode";
 import { Form, Input, Button, FormGroup, Label } from "reactstrap";
+import { Redirect } from "react-router-dom";
 
 import "../App.css";
 
@@ -16,7 +17,8 @@ class WorkerDashboard extends Component {
       jobTitle: "",
       tagline: "",
       totalTips: null,
-      selectedFile: null
+      selectedFile: null,
+      deleted: false
     };
   }
 
@@ -32,7 +34,9 @@ class WorkerDashboard extends Component {
       }
     };
     const { id } = jwt_decode(token);
+    // const id = 1
     /* This is where an axios.get would be done to get worker by id */
+    // Axios.get(`http://localhost:3333/api/worker/${id}`, options)
     Axios.get(`https://tipease-server.herokuapp.com/api/worker/${id}`, options)
       .then(response => {
         const {
@@ -46,7 +50,7 @@ class WorkerDashboard extends Component {
         } = response.data[0];
         this.setState({
           id,
-          photo: photo || '',
+          photo: photo || "",
           fname,
           lname,
           jobTitle,
@@ -57,9 +61,25 @@ class WorkerDashboard extends Component {
       .catch(err => console.log("Dashboard error:", err));
   };
 
-  deleteAccount = id => {
-    Axios.delete(`https://tipease-server.herokuapp.com/api/worker/delete/${id}`)
-      .then(response => console.log(response))
+  deleteAccount = e => {
+    // Axios.delete(`http://localhost:3333/api/worker/delete/${id}`)
+    const token = localStorage.getItem("jwt");
+    const options = {
+      headers: {
+        Authorization: token
+      }
+    };
+    const { id } = this.state;
+    console.log(id);
+    Axios.delete(
+      `https://tipease-server.herokuapp.com/api/worker/delete/${id}`,
+      options
+    )
+      .then(response => {
+        console.log(response);
+        localStorage.removeItem("jwt");
+        this.setState({ deleted: true });
+      })
       .catch(err => console.log(err));
   };
 
@@ -89,7 +109,8 @@ class WorkerDashboard extends Component {
       tagline,
       totalTips
     };
-    console.log(id, user);
+    // console.log(id, user);
+    // Axios.put(`http://localhost:3333/api/worker/update/${id}`, user, options)
     Axios.put(
       `https://tipease-server.herokuapp.com/api/worker/update/${id}`,
       user,
@@ -108,12 +129,18 @@ class WorkerDashboard extends Component {
     this.setState({ [e.target.name]: e.target.value });
   };
 
+  handleChange(selectorFiles: FileList) {
+    console.log(selectorFiles);
+  }
+
   fileSelectedHandler = e => {
     const files = e.target.files;
+
     this.setState({ selectedFile: files[0] });
   };
 
   uploadPhoto = () => {
+    console.log("Photo in state: ", this.state.photo);
     const token = localStorage.getItem("jwt");
     const options = {
       headers: {
@@ -121,14 +148,19 @@ class WorkerDashboard extends Component {
       }
     };
     const fd = new FormData();
-
+    console.log(
+      "file in state being appended to fd: ",
+      this.state.selectedFile
+    );
     fd.append("profilePic", this.state.selectedFile);
-  
+    console.log("form data being sent in axios: ", fd);
     const { id } = this.state;
 
+    // Axios.post(`http://localhost:3333/upload/${id}`, fd, options)
     Axios.post(`https://tipease-server.herokuapp.com/upload/${id}`, fd, options)
       .then(response => {
         console.log("axios response", response);
+        this.refresh();
       })
       .catch(err => {
         console.log("Upload error");
@@ -136,15 +168,39 @@ class WorkerDashboard extends Component {
   };
 
   render() {
-    const { photo, fname, lname, jobTitle, tagline, totalTips } = this.state;
+    const {
+      photo,
+      fname,
+      lname,
+      jobTitle,
+      tagline,
+      totalTips,
+      deleted
+    } = this.state;
+    if (deleted) {
+      return <Redirect to="/register" />;
+    }
     const URL = "https://tipease-server.herokuapp.com";
+    // const URL = "http://localhost:3333";
     const photoURL = photo.slice(6);
+    console.log(URL, photoURL);
     return (
       <div className="worker-dashboard">
-        <h3 style={{ textAlign: "center" }}>
+        <h3
+          style={{ textAlign: "center", color: "snow", marginBottom: "20px" }}
+        >
           Welcome to your dashboard, {fname}!
         </h3>
-        <img
+        <Form
+          className="worker-dashboard-form"
+          onSubmit={this.updateAccount}
+          style={{
+            backgroundColor: "white",
+            boxShadow: "0 0 10px snow",
+            border: "1px solid #333"
+          }}
+        >
+          <img
             src={`${URL}${photoURL}`}
             style={{
               display: "block",
@@ -154,7 +210,7 @@ class WorkerDashboard extends Component {
             }}
             alt="a pic"
           />
-        <Form className="worker-dashboard-form" onSubmit={this.updateAccount}>
+          {/*<h6>{photo}</h6>*/}
           <FormGroup>
             <Label for="fname-input">First Name</Label>
             <Input
@@ -205,16 +261,16 @@ class WorkerDashboard extends Component {
               <Button type="submit">Upload Photo</Button>
             </Form>
           </FormGroup>
+          {/*<FormGroup>
+            <Label for="photo-input">Upload Image file</Label>
+            <Input type="file" onChange={this.fileSelectedHandler} />
+          </FormGroup>*/}
           <h3>Total Tips Recieved: ${totalTips || 0}</h3>
           <div className="worker-btns">
             <Button outline type="submit">
               Update Information
             </Button>
-            <Button
-              outline
-              type="button"
-              onClick={() => this.deleteAccount(this.props.workerID)}
-            >
+            <Button outline type="button" onClick={this.deleteAccount}>
               Delete Profile
             </Button>
           </div>
