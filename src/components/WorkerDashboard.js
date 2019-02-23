@@ -129,9 +129,9 @@ class WorkerDashboard extends Component {
     this.setState({ [e.target.name]: e.target.value });
   };
 
-  handleChange(selectorFiles: FileList) {
-    console.log(selectorFiles);
-  }
+  // handleChange(selectorFiles: FileList) {
+  //   console.log(selectorFiles);
+  // }
 
   fileSelectedHandler = e => {
     const files = e.target.files;

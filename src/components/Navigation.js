@@ -33,7 +33,7 @@ export default class Navigation extends React.Component {
     return (
       <div>
         <Navbar
-          inverse
+          dark
           style={{ backgroundColor: "#008C17" }}
           light
           expand="md"

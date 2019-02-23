@@ -5,10 +5,7 @@ import {
   Button,
   Form,
   FormGroup,
-  Label,
-  Input,
-  NavLink,
-  Nav
+  Input
 } from "reactstrap";
 
 import "../App.css";
