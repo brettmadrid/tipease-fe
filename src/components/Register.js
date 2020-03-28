@@ -23,7 +23,6 @@ class Register extends Component {
   };
 
   toggleCustomer = () => {
-    // this.setState({ collapseCustomer: !this.state.collapseCustomer });
     this.setState({
       collapseCustomer: !this.state.collapseCustomer,
       collapseWorker: false,
@@ -33,12 +32,10 @@ class Register extends Component {
   };
 
   toggleWorker = () => {
-    //this.setState({ collapseWorker: !this.state.collapseWorker });
     this.setState({
       collapseWorker: !this.state.collapseWorker,
       collapseCustomer: false,
       accountType: "worker"
-      //isWorker: true
     });
   };
 

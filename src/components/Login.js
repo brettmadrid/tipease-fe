@@ -1,12 +1,7 @@
 import React from "react";
 import { Redirect, Link } from "react-router-dom";
 import Axios from "axios";
-import {
-  Button,
-  Form,
-  FormGroup,
-  Input
-} from "reactstrap";
+import { Button, Form, FormGroup, Input } from "reactstrap";
 
 import "../App.css";
 
@@ -27,7 +22,7 @@ export default class Login extends React.Component {
     };
 
     // Axios.post("http://localhost:3333/api/login", user)
-    Axios.post("https://tipease-server.herokuapp.com/api/login", user)
+    Axios.post("https://tipease-be.herokuapp.com/api/login", user)
       .then(response => {
         localStorage.setItem("jwt", response.data.token);
         this.setState({ isLoggedIn: true });

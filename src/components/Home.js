@@ -12,19 +12,16 @@ class Home extends Component {
   };
 
   componentDidMount() {
-    // console.log("Home.js - inside ComponentDidMount");
     const token = localStorage.getItem("jwt");
 
     if (token) {
       const { username, accountType, id } = jwt_decode(token);
-      // console.log("Account type", accountType);
       this.setState({ username, accountType, id, isLoading: false });
     }
     this.setState({ isLoading: false });
   }
 
   render() {
-    // console.log("Home.js - inside render");
     if (this.state.isLoading) {
       return <div>Loading...</div>;
     }

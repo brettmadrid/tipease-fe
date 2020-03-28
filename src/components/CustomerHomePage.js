@@ -38,10 +38,8 @@ class CustomerHomePage extends Component {
         Authorization: token
       }
     };
-    /* This is where an axios.get would be done to get all of the workers from the database, then set your this.state.workers to the response.data */
-    // Axios.get("http://localhost:3333/api/customer", options)
-    Axios.get("https://tipease-server.herokuapp.com/api/customer", options)
-      // .then(response => console.log(response))
+
+    Axios.get("https://tipease-be.herokuapp.com/api/customer", options)
       .then(response =>
         this.setState({
           username,
@@ -89,14 +87,9 @@ class CustomerHomePage extends Component {
       }
     };
     console.log("tipSubmitHandler args: ", tip);
-    // Update server with amount
-    // Axios.post(
-    //   `http://localhost:3333/api/customer/worker/${id}`,
-    //   { tip: +tip },
-    //   options
-    // )
+
     Axios.post(
-      `https://tipease-server.herokuapp.com/api/customer/worker/${id}`,
+      `https://tipease-be.herokuapp.com/api/customer/worker/${id}`,
       { tip: +tip },
       options
     )

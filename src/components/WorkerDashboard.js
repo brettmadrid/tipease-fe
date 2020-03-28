@@ -37,7 +37,7 @@ class WorkerDashboard extends Component {
     // const id = 1
     /* This is where an axios.get would be done to get worker by id */
     // Axios.get(`http://localhost:3333/api/worker/${id}`, options)
-    Axios.get(`https://tipease-server.herokuapp.com/api/worker/${id}`, options)
+    Axios.get(`https://tipease-be.herokuapp.com/api/worker/${id}`, options)
       .then(response => {
         const {
           id,
@@ -62,7 +62,6 @@ class WorkerDashboard extends Component {
   };
 
   deleteAccount = e => {
-    // Axios.delete(`http://localhost:3333/api/worker/delete/${id}`)
     const token = localStorage.getItem("jwt");
     const options = {
       headers: {
@@ -72,7 +71,7 @@ class WorkerDashboard extends Component {
     const { id } = this.state;
     console.log(id);
     Axios.delete(
-      `https://tipease-server.herokuapp.com/api/worker/delete/${id}`,
+      `https://tipease-be.herokuapp.com/api/worker/delete/${id}`,
       options
     )
       .then(response => {
@@ -109,10 +108,9 @@ class WorkerDashboard extends Component {
       tagline,
       totalTips
     };
-    // console.log(id, user);
-    // Axios.put(`http://localhost:3333/api/worker/update/${id}`, user, options)
+
     Axios.put(
-      `https://tipease-server.herokuapp.com/api/worker/update/${id}`,
+      `https://tipease-be.herokuapp.com/api/worker/update/${id}`,
       user,
       options
     )
@@ -128,10 +126,6 @@ class WorkerDashboard extends Component {
     e.preventDefault();
     this.setState({ [e.target.name]: e.target.value });
   };
-
-  // handleChange(selectorFiles: FileList) {
-  //   console.log(selectorFiles);
-  // }
 
   fileSelectedHandler = e => {
     const files = e.target.files;
@@ -156,8 +150,7 @@ class WorkerDashboard extends Component {
     console.log("form data being sent in axios: ", fd);
     const { id } = this.state;
 
-    // Axios.post(`http://localhost:3333/upload/${id}`, fd, options)
-    Axios.post(`https://tipease-server.herokuapp.com/upload/${id}`, fd, options)
+    Axios.post(`https://tipease-be.herokuapp.com/upload/${id}`, fd, options)
       .then(response => {
         console.log("axios response", response);
         this.refresh();
@@ -181,7 +174,6 @@ class WorkerDashboard extends Component {
       return <Redirect to="/register" />;
     }
     const URL = "https://tipease-server.herokuapp.com";
-    // const URL = "http://localhost:3333";
     const photoURL = photo.slice(6);
     console.log(URL, photoURL);
     return (
@@ -210,7 +202,6 @@ class WorkerDashboard extends Component {
             }}
             alt="a pic"
           />
-          {/*<h6>{photo}</h6>*/}
           <FormGroup>
             <Label for="fname-input">First Name</Label>
             <Input
@@ -261,10 +252,6 @@ class WorkerDashboard extends Component {
               <Button type="submit">Upload Photo</Button>
             </Form>
           </FormGroup>
-          {/*<FormGroup>
-            <Label for="photo-input">Upload Image file</Label>
-            <Input type="file" onChange={this.fileSelectedHandler} />
-          </FormGroup>*/}
           <h3>Total Tips Recieved: ${totalTips || 0}</h3>
           <div className="worker-btns">
             <Button outline type="submit">
