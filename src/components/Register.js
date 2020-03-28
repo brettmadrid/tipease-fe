@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 import { Button, Collapse } from "reactstrap";
-import { AvForm, AvField } from 'availity-reactstrap-validation';
+import { AvForm, AvField } from "availity-reactstrap-validation";
 import Axios from "axios";
 
 import "../App.css";
@@ -64,7 +64,7 @@ class Register extends Component {
     };
 
     if (accountType === "customer") {
-      Axios.post("https://tipease-server.herokuapp.com/api/register", {
+      Axios.post("https://tipease-be.herokuapp.com/api/register", {
         username,
         password,
         accountType
@@ -76,7 +76,7 @@ class Register extends Component {
           console.log("Error registering customer: ", error);
         });
     } else {
-      Axios.post("https://tipease-server.herokuapp.com/api/register", user)
+      Axios.post("https://tipease-be.herokuapp.com/api/register", user)
         .then(response => {
           this.setState({ isRegistered: true });
         })
@@ -149,28 +149,28 @@ class Register extends Component {
           <Collapse isOpen={this.state.collapseCustomer}>
             <h4 style={{ textAlign: "center", color: "#555" }}>Customer</h4>
             <AvForm className="input-form" onSubmit={this.submitHandler}>
-                <AvField
-                  type="text"
-                  name="username"
-                  id="username"
-                  placeholder="username"
-                  value={this.state.username}
-                  onChange={this.handleInput}
-                />
-                <AvField
-                  type="password"
-                  name="password"
-                  id="password"
-                  placeholder="password"
-                  value={this.state.password}
-                  onChange={this.handleInput}
-                />
-                <AvField
-                  type="password"
-                  name="confirmationPassword"
-                  placeholder="password"
-                  validate={{match:{value:'password'}}}
-                />
+              <AvField
+                type="text"
+                name="username"
+                id="username"
+                placeholder="username"
+                value={this.state.username}
+                onChange={this.handleInput}
+              />
+              <AvField
+                type="password"
+                name="password"
+                id="password"
+                placeholder="password"
+                value={this.state.password}
+                onChange={this.handleInput}
+              />
+              <AvField
+                type="password"
+                name="confirmationPassword"
+                placeholder="password"
+                validate={{ match: { value: "password" } }}
+              />
               <Button outline type="submit">
                 Register
               </Button>
@@ -179,56 +179,56 @@ class Register extends Component {
           <Collapse isOpen={this.state.collapseWorker}>
             <h4 style={{ textAlign: "center", color: "#555" }}>Worker</h4>
             <AvForm className="input-form" onSubmit={this.submitHandler}>
-                <AvField
-                  type="text"
-                  name="username"
-                  id="username"
-                  placeholder="username"
-                  value={this.state.username}
-                  onChange={this.handleInput}
-                />
-                <AvField
-                  type="password"
-                  name="password"
-                  id="password"
-                  placeholder="password"
-                  value={this.state.password}
-                  onChange={this.handleInput}
-                />
-                <AvField
-                  type="password"
-                  name="confirmationPassword"
-                  placeholder="password"
-                  validate={{match:{value:'password'}}}
-                />
-                <AvField
-                  type="text"
-                  name="fname"
-                  placeholder="first name"
-                  value={this.state.fname}
-                  onChange={this.handleInput}
-                />
-                <AvField
-                  type="text"
-                  name="lname"
-                  placeholder="last name"
-                  value={this.state.lname}
-                  onChange={this.handleInput}
-                />
-                <AvField
-                  type="text"
-                  name="jobTitle"
-                  placeholder="job title"
-                  value={this.state.jobTitle}
-                  onChange={this.handleInput}
-                />
-                <AvField
-                  type="text"
-                  name="tagline"
-                  placeholder="tagline"
-                  value={this.state.tagline}
-                  onChange={this.handleInput}
-                />
+              <AvField
+                type="text"
+                name="username"
+                id="username"
+                placeholder="username"
+                value={this.state.username}
+                onChange={this.handleInput}
+              />
+              <AvField
+                type="password"
+                name="password"
+                id="password"
+                placeholder="password"
+                value={this.state.password}
+                onChange={this.handleInput}
+              />
+              <AvField
+                type="password"
+                name="confirmationPassword"
+                placeholder="password"
+                validate={{ match: { value: "password" } }}
+              />
+              <AvField
+                type="text"
+                name="fname"
+                placeholder="first name"
+                value={this.state.fname}
+                onChange={this.handleInput}
+              />
+              <AvField
+                type="text"
+                name="lname"
+                placeholder="last name"
+                value={this.state.lname}
+                onChange={this.handleInput}
+              />
+              <AvField
+                type="text"
+                name="jobTitle"
+                placeholder="job title"
+                value={this.state.jobTitle}
+                onChange={this.handleInput}
+              />
+              <AvField
+                type="text"
+                name="tagline"
+                placeholder="tagline"
+                value={this.state.tagline}
+                onChange={this.handleInput}
+              />
               <Button outline type="submit">
                 Register
               </Button>
